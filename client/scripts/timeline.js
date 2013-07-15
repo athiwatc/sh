@@ -39,7 +39,7 @@ Template.timeline.rendered = function() {
 		});
 		// Event listener for displaying addition information
 		enter.on('mouseover', function (d, i) {
-		    $('#info').html('At time: ' + i % interval + ' Activity: ' + d.color);
+		    $('#info').html('At time: ' + i % interval + ' Activity: ' + d.name);
 		});
 	});
 };

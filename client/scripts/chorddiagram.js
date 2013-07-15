@@ -16,6 +16,8 @@ Template.chorddiagram.rendered = function() {
     var svg = d3.select("#chorddiagram").append("svg").attr("width", width).attr("height", height).append("g").attr("id", "circle").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     // Add the first circle if it doesn't exists, else change the properties.
     svg.append("circle").attr("r", outerRadius);
+    // Generate Color
+    var colors = d3.scale.category20();
     // Load up two files.
     d3.csv("chorddiagram.csv", function(cities) {
         d3.json("matrix.json", function(matrix) {
@@ -25,13 +27,13 @@ Template.chorddiagram.rendered = function() {
             var group = svg.selectAll(".group").data(layout.groups).enter().append("g").attr("class", "group").on("mouseover", mouseover);
             // Add a mouseover title.
             group.append("title").text(function(d, i) {
-                return cities[i].name + ": " + formatPercent(d.value) + " of origins";
+                return cities[i].name + ": " + d.value + " of origins";
             });
             // Add the group arc.
             var groupPath = group.append("path").attr("id", function(d, i) {
                 return "group" + i;
             }).attr("d", arc).style("fill", function(d, i) {
-                return cities[i].color;
+                return colors(cities[i].color);
             });
             // Add a text label.
             var groupText = group.append("text").attr("x", 6).attr("dy", 15);
@@ -46,7 +48,7 @@ Template.chorddiagram.rendered = function() {
             }).remove();
             // Add the chords.
             var chord = svg.selectAll(".chord").data(layout.chords).enter().append("path").attr("class", "chord").style("fill", function(d) {
-                return cities[d.source.index].color;
+                return colors(cities[d.source.index].color);
             }).attr("d", path);
             // Add an elaborate mouseover title for each chord.
             chord.append("title").text(function(d) {

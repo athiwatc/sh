@@ -452,14 +452,14 @@ class VisualizeParser
 		data_matrix = []
 		matrix_map = new Map()
 		unique_index = 0
+		color_code = 1
 		for obj in data
-			random_color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
-			#random_color = d3.scale.category20(number 1-20)
-			data_text += '\r\n' + obj.key + ',' + random_color
+			data_text += '\r\n' + obj.key + ',' + color_code
 			##for making matrix
 			matrix_map.put(obj.key, unique_index)
 			data_matrix.push([])
 			unique_index += 1
+			color_code += 1
 		# generate matrix
 		i = 0
 		while i < unique_index
@@ -476,8 +476,9 @@ class VisualizeParser
 				index_val = matrix_map.get(d.key)
 				index_key = matrix_map.get(obj.key)
 				data_matrix[index_key][index_val] = d.value
-		fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
 		fs.writeFileSync('./public/' + path_data, data_text)
+		#fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
+		
 
 Meteor.methods({
 	print: ()->
@@ -487,5 +488,5 @@ Meteor.methods({
 		data_dia = filter.getAllActivitiesInSequencePair()
 		vp = new VisualizeParser()
 		x = vp.parseChordDiagram(data_dia)
-		return 'Success'
+		return 'Success!'
 })
