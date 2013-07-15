@@ -1,6 +1,5 @@
 name,color
-Phone_Call,#cb78ba
-Wash_hands,#5164fb
-Cook,#3266e7
-Eat,#55a711
-Clean,#817faa
+Eat,#8d4a20
+Phone_Call,#21b7a5
+Cook,#ea7280
+Sleep,#635fc1
