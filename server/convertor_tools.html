@@ -416,6 +416,49 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
             <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_first</span>
     <span class="k">return</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span>
 
+  <span class="nv">getAllActivitiesInUnixTime: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="nx">activity_color_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Format in time stack {name: 'Activity Name', color: 'color to visualize', time: 'unix time of activity'}</p></div></div><div class="code"><div class="wrapper">    <span class="nx">time_stack</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="nx">state_none</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="nx">state_on_activity</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
+    <span class="nx">activity_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="nx">activity_color</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="nx">activity_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">current_time</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">color_id</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">for</span> <span class="nx">d</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
+      <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
+      <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_none</span>
+          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
+            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_on_activity</span>
+            <span class="nx">activity_name</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="o">!</span><span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span>
+              <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">,</span> <span class="nx">color_id</span><span class="p">)</span>
+              <span class="nx">color_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="nx">activity_color</span> <span class="o">=</span> <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span>
+            <span class="nx">activity_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_floorSecondUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+          <span class="k">else</span>
+            <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="nv">color: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_on_activity</span>
+          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="nx">activity_name</span>
+            <span class="nx">current_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_floorSecondUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="nx">current_time</span> <span class="o">-</span> <span class="nx">activity_time</span> <span class="o">&gt;=</span> <span class="mi">60</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Push time in period minute per event</p></div></div><div class="code"><div class="wrapper">              <span class="k">while</span> <span class="nx">activity_time</span> <span class="o">&lt;=</span> <span class="nx">current_time</span>
+                <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span>
+                <span class="nx">activity_time</span> <span class="o">+=</span> <span class="mi">60</span>
+            <span class="k">else</span>
+              <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reset activity and state</p></div></div><div class="code"><div class="wrapper">            <span class="nx">activity_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="nx">activity_color</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="nx">activity_time</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
+    <span class="k">return</span> <span class="nx">time_stack</span>
+
+  <span class="nv">_floorSecondUnixTime: </span><span class="p">(</span><span class="nx">unixtime</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="nx">raw</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">unixtime</span><span class="p">)</span>
+    <span class="nx">cut_off_second</span> <span class="o">=</span> <span class="nx">raw</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;YYYY-MM-DD,HH:mm&quot;</span><span class="p">)</span>
+    <span class="nx">convert_to_unix</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">cut_off_second</span><span class="p">,</span> <span class="s2">&quot;YYYY-MM-DD,HH:mm&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">convert_to_unix</span><span class="p">.</span><span class="nx">unix</span><span class="p">()</span>
 
 
 <span class="nx">class</span> <span class="nx">VisualizeParser</span>
@@ -460,15 +503,23 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
         <span class="nx">data_matrix</span><span class="p">[</span><span class="nx">index_key</span><span class="p">][</span><span class="nx">index_val</span><span class="p">]</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span>
     <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path_data</span><span class="p">,</span> <span class="nx">data_text</span><span class="p">)</span>
     <span class="c1">#fs.writeFileSync(&#39;./public/&#39; + path_matrix, JSON.stringify(data_matrix))</span>
-    
+  
+  <span class="nv">parseTimeLineMatrix: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="nx">path</span> <span class="o">=</span> <span class="s1">&#39;timeline.csv&#39;</span>
+    <span class="nx">text</span> <span class="o">=</span> <span class="s1">&#39;name,color,time&#39;</span>
+    <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
+      <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">color</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">time</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span>
 
 <span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
   <span class="nv">print: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">sd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SensorDictionary</span><span class="p">(</span><span class="s2">&quot;all-pos.txt&quot;</span><span class="p">)</span>
     <span class="nx">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConvertorTimelineFormat</span><span class="p">(</span><span class="s1">&#39;raw-data-sh.txt&#39;</span><span class="p">,</span><span class="nx">sd</span><span class="p">)</span>
     <span class="nx">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataFilter</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getData</span><span class="p">())</span>
-    <span class="nx">data_dia</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">getAllActivitiesInSequencePair</span><span class="p">()</span>
+    <span class="c1">#data_dia = filter.getAllActivitiesInSequencePair()</span>
     <span class="nx">vp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VisualizeParser</span><span class="p">()</span>
-    <span class="nx">x</span> <span class="o">=</span> <span class="nx">vp</span><span class="p">.</span><span class="nx">parseChordDiagram</span><span class="p">(</span><span class="nx">data_dia</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;Success!&#39;</span>
+    <span class="c1">#x = vp.parseChordDiagram(data_dia)</span>
+    <span class="nx">data_timeline</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">getAllActivitiesInUnixTime</span><span class="p">()</span>
+    <span class="nx">vp</span><span class="p">.</span><span class="nx">parseTimeLineMatrix</span><span class="p">(</span><span class="nx">data_timeline</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">data_timeline</span>
 <span class="p">})</span></div></div></div></div></body></html>
