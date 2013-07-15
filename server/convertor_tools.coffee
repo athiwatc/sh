@@ -1,5 +1,6 @@
 this.fs = Npm.require('fs')
 
+
 class SensorDictionary
 	constructor: (path)->
 		@_dict = [] #format {key:"xx", x: "00",y: "23"}
@@ -28,28 +29,54 @@ class SensorDictionary
 			return @_dict[key].y;
 		return undefined
 
+###
+Use to convert data
+From format: 
+Date Time Sensor_Name Status
+or
+Date Time Activity_Name Status
+
+2008-02-27	12:45:14.498824	M13	OFF
+2008-02-27	12:49:15 asterisk END
+To:
+1 Unixtime xPos yPos sensor_name sensor_status
+0 Unixtime event_name event_status
+
+1 1204112862 683 123 M13 OFF
+0 1204116555 asterisk START 
+
+Line of data that is a sensor activation, its converted format data would put prefix '1' in the front
+List of data that is a activity, convert, its converted format data would put prefix '0' in the front
+###
 class Convertor
 
+	
+	#Initial path file to convert and sensor dictionary
+	#params _path: file path
+	#params _sensor_dict: SensorDictionary object for sensor dictionary
 	constructor: (@_path, @_sensor_dict)->
 		@_data = []		
 		@_preProcessingData()
 	
+	#Get list of new format data
+	#return list of new format data
 	getData: ()->
 		result = []
 		for s in @_data
 			result.push(s)
 		return result
 
+	#Preprocessing data by read and convert data
 	_preProcessingData: ()->
 		tmp_data = fs.readFileSync('./public/' + @_path, 'utf8')
 		lines = tmp_data.toString().split('\n')
 		for l in lines
 			@_data.push(l)
-		@_cleanData()
+		@_convertData()
 	
 	
-	#Determine 0,1 to be prefix on data
-	_cleanData: ()->
+	#Convert data
+	_convertData: ()->
 		output = []
 		for line in @_data
 			#clear indent and space
@@ -71,43 +98,81 @@ class Convertor
 				output.push(@_parseString(result))
 		@_data = output
 
-
+	#Convert data array to one string
+	#params arr: array of data
+	#return string format of data array
 	_parseString: (arr)->
 		s = ''
 		for a in arr
 			s += ' ' + a
 		return s
 	
+	#Convert data array of activity
+	#params arr: data array of activity
+	#return converted data
 	_processArrayForPrefixZero: (arr)->
 		result = []
 		result[0] = "0"
-		result[1] = @convertStringDateToUnix(arr[0],arr[1]) + ""
+		result[1] = @_convertStringDateToUnix(arr[0],arr[1]) + ""
 		result[2] = arr[arr.length - 2]
 		result[3] = arr[arr.length - 1]
 		return result
 	
+	#Convert data array of sensor activation
+	#params arr: data array of activity
+	#return converted data
 	_processArrayForPrefixOne: (arr)->
 		result = []
 		result[0] = "1"
 		#date to unix
-		result[1] = @convertStringDateToUnix(arr[0],arr[1]) + ""
+		result[1] = @_convertStringDateToUnix(arr[0],arr[1]) + ""
 		result[2] = @_sensor_dict.getXPOS(arr[2]) + ""
 		result[3] = @_sensor_dict.getYPOS(arr[2]) + ""
 		result[4] = arr[2]
 		result[5] = arr[3]
 		return result
 	
-	convertStringDateToUnix: (ymd, time)->
+	#Convert date and time to Unixtime
+	#params ymd: year-month-day Ex. 2008-12-08
+	#params time: time Ex. 12:45:14
+	#return Unixtime
+	_convertStringDateToUnix: (ymd, time)->
 		t = time
 		s = ymd + "," + t
 		result = moment(s, "YYYY-MM-DD,HH:mm:ss")
 		return result
 
+###
+Use to convert data to timeline format (Standard format for this application)
+From format: (Converted data format from Convertor Class)
+1 1204112607 568 231 M08 ON 
+1 1204112607 503 197 M07 ON 
+1 1204112608 592 197 M09 ON 
+1 1204112609 683 197 M14 ON 
+1 1204112609 484 291 M23 OFF 
+1 1204112610 484 261 M01 OFF 
+1 1204112610 503 197 M07 OFF 
+1 1204112611 683 123 M13 ON 
+1 1204112611 568 231 M08 OFF 
+1 1204112612 592 197 M09 OFF 
+1 1204112613 683 197 M14 OFF
+0 1204112620 Phone_call begin
 
+To:
+Prefix Unixtime [Active Sensors or Activity] [Activity status if it is activity]
+1 1204112607 M07 M08 
+1 1204112608 M07 M08 M09 
+1 1204112609 M07 M08 M09 M14 
+1 1204112610 M08 M09 M14
+0 1204112620 Phone_call begin
+###
 class ConvertorTimelineFormat extends Convertor
 	
+	#Override
 	_preProcessingData: () ->
+		#call _preProcessingData from Super class
 		super
+		#array of sensor status for checking data in convert process
 		@_check_on = ["ON", "OPEN", "PRESENT"]
 		@_check_off = ["OFF", "CLOSE", "ABSENT"]
 		@_convertToTimeline()
@@ -402,4 +467,3 @@ Meteor.methods({
 		#vp.parseChordDiagram(data_dia)
 		return data_dia
 })
-
