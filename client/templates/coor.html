@@ -1,0 +1,18 @@
+<template name="coor">
+	<input id="filecoor" /> <button id="loadcoor" class="btn btn-primary">Load image</button>
+	<form id="pointform" method="post">
+			<div id="pointer_div" onclick="pointIt(event)" style = "width: auto; height: auto;">
+				<img src="" id="picture"/>
+				<!--img src="point.gif" id="cross" style="position:relative;visibility:hidden;z-index:2;"/-->
+			</div>
+
+			<div id="data_div" counter="0">
+				<h2>--Sensor Position--<h2>
+			</div>
+
+		<button class="btn btn-primary" id="copyoutput">Generate result</button>
+		</form> 
+		----<br>
+		<textarea id="output"></textarea>
+		<br>----
+</template>
