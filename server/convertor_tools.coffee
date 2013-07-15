@@ -362,6 +362,34 @@ class DataFilter
 	#format {activity: 'xxx', next_activities: '000'}
 	#next_activities that are possible happened next activities 
 	getAllActivitiesInSequencePair: ()->
+		@_data = ['0 1 Phone_Call begin'
+			,'0 1 Asterick begin'
+			,'0 1 Asterick end'
+			,'0 1 Phone_Call end'
+			,'0 1 Eat begin'
+			,'1 1 Asterick end'
+			,'0 1 Eat end'
+			,'1 1 Asterick end'
+			,'0 1 Phone_Call begin'
+			,'0 1 Phone_Call end'
+			,'1 1 Asterick end'
+			,'0 1 Cook begin'
+			,'0 1 Cook end'
+			,'0 1 Eat begin'
+			,'1 1 Asterick end'
+			,'0 1 Eat end'
+			,'1 1 Asterick end'
+			,'1 1 Asterick end'
+			,'0 1 Phone_Call begin'
+			,'1 1 Asterick end'
+			,'0 1 Phone_Call end'
+			,'0 1 Eat begin'
+			,'1 1 Asterick end'
+			,'0 1 Eat end'
+			,'1 1 Asterick end'
+			,'0 1 Sleep begin'
+			,'0 1 Sleep end'
+		]
 		storage = new Map()
 		#to find first event
 		state_find_first = 1
@@ -428,12 +456,11 @@ class VisualizeParser
 			random_color = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6)
 			#random_color = d3.scale.category20(number 1-20)
 			data_text += '\r\n' + obj.key + ',' + random_color
-
 			##for making matrix
 			matrix_map.put(obj.key, unique_index)
 			data_matrix.push([])
 			unique_index += 1
-		#gen matrix
+		# generate matrix
 		i = 0
 		while i < unique_index
 			j = 0
@@ -442,7 +469,7 @@ class VisualizeParser
 				j += 1
 			i += 1
 		
-		#determine val in matrix
+		# determine value in matrix
 		for obj in data
 			val_list = obj.value.toObjectList()
 			for d in val_list
