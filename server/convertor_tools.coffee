@@ -433,7 +433,7 @@ class VisualizeParser
 			text += '\r\n' + obj.key + ',' + obj.value
 		fs.writeFileSync('./public/' + path, text)
 
-###
+
 	#data must be list Map< activity, Map<next_activity,count> >
 	parseChordDiagram: (data)->
 		path_data = 'chorddiagram.csv'
@@ -464,9 +464,9 @@ class VisualizeParser
 				index_val = matrix_map.get(d.key)
 				index_key = matrix_map.get(obj.key)
 				data_matrix[index_key][index_val] = d.value
-		fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
-		fs.writeFileSync('./public/' + path_data, data_text)
-###
+		return [data_text, data_matrix]
+		#fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
+		#fs.writeFileSync('./public/' + path_data, data_text)
 
 Meteor.methods({
 	print: ()->
@@ -475,6 +475,6 @@ Meteor.methods({
 		filter = new DataFilter(c.getData())
 		data_dia = filter.getAllActivitiesInSequencePair()
 		vp = new VisualizeParser()
-		#vp.parseChordDiagram(data_dia)
-		return data_dia
+		x = vp.parseChordDiagram(data_dia)
+		return x
 })
