@@ -62,7 +62,25 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "title": "chorddiagram"
               },
               "depth": 3,
-              "outline": []
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Chord Diagram",
+                    "slug": "chord-diagram"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Credit: http://bost.ocks.org/mike/uberdata/",
+                    "slug": "credit-httpbostocksorgmikeuberdata"
+                  },
+                  "depth": 1
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -78,23 +96,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "title": "coor"
               },
               "depth": 3,
-              "outline": []
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".js"],
-                  "pygmentsLexer": "javascript",
-                  "singleLineComment": ["//"],
-                  "name": "JavaScript"
-                },
-                "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/scripts/groupedbarchart.js",
-                "projectPath": "client/scripts/groupedbarchart.js",
-                "targetPath": "client/scripts/groupedbarchart",
-                "title": "groupedbarchart"
-              },
-              "depth": 3,
-              "outline": []
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Coorninate picker",
+                    "slug": "coorninate-picker"
+                  },
+                  "depth": 2
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -127,6 +139,32 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               },
               "depth": 3,
               "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".js"],
+                  "pygmentsLexer": "javascript",
+                  "singleLineComment": ["//"],
+                  "name": "JavaScript"
+                },
+                "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/scripts/timeline.js",
+                "projectPath": "client/scripts/timeline.js",
+                "targetPath": "client/scripts/timeline",
+                "title": "timeline"
+              },
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Timeline",
+                    "slug": "timeline"
+                  },
+                  "depth": 2
+                }
+              ]
             }, {
               "type": "file",
               "data": {
