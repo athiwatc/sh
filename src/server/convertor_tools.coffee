@@ -177,7 +177,7 @@ class ConvertorTimelineFormat extends Convertor
 		@_check_off = ["OFF", "CLOSE", "ABSENT"]
 		@_convertToTimeline()
 
-	
+	#Convert to timeline data
 	_convertToTimeline: ()->
 		on_sensor = new Set()
 		result = []
@@ -209,18 +209,29 @@ class ConvertorTimelineFormat extends Convertor
 			i += 1
 		@_data = result
 	
+	#Checking element in array
+	#params s1: element that want to check
+	#params set: array
+	#return true if element is in array; otherwise false
 	_isIn: (s1, set)->
 		for i in set
 			if i.toLowerCase() == s1.toLowerCase()
 				return true
 		return false
 
+	#Convert data array to one string for sensor activation
+	#params time: time of activation
+	#params set: set of sensor name
+	#return string format of data array
 	_buildStringPrefixOne: (time, set)->
 		output = " " + "1 " + time
 		for s in set
 			output += " " + s
 		return output.trim()
 	
+	#To check a sensor is changed status at the same time or not
+	#params s1: first data that want to check 
+	#params s2: next data that want to check
 	_isSameSensorChangeAtTheSameTime: (s1, s2)->
 		first = s1.split(/[\s]/)
 		second = s2.split(/[\s]/)

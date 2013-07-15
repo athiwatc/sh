@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><title>src/server/data_loader</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="src/server/data_loader"><meta name="groc-project-path" content="src/server/data_loader.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">src/server/data_loader.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">fs</span> <span class="o">=</span> <span class="nx">Npm</span><span class="p">.</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">)</span>
+
+
+<span class="c1">#Meteor.method</span>
+
+<span class="c1">#Remove old data</span>
+<span class="c1">#SensorPosition.remove({})</span>
+<span class="c1">#SensorData.remove({})</span>
+
+<span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span> <span class="p">{</span>
+  <span class="c1">#Call everything the user wants to load a new data set</span>
+  <span class="nv">update: </span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="c1">#Check if the filename is a string</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nb">String</span><span class="p">)</span>
+    <span class="c1">#SensorPosition.remove({})</span>
+    <span class="p">(</span><span class="o">-&gt;</span>
+      <span class="c1">#Result if the result is already in the database to save time</span>
+      <span class="k">return</span> <span class="k">if</span> <span class="nx">SensorPosition</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nv">file: </span><span class="nx">filename</span><span class="p">})</span>
+      <span class="c1">#Read out the file to memory</span>
+      <span class="nx">data</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;public/&#39;</span> <span class="o">+</span> <span class="nx">filename</span> <span class="o">+</span> <span class="s1">&#39;-pos.txt&#39;</span><span class="p">)</span>
+      <span class="c1">#Split it into pieces for processing</span>
+      <span class="nx">pos</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\r\n|\r|\n/g</span><span class="p">);</span>
+      <span class="k">for</span> <span class="nx">x</span> <span class="k">in</span> <span class="nx">pos</span>
+        <span class="nx">p</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="c1">#Inserting it into the database one by one</span>
+        <span class="nx">SensorPosition</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nv">file: </span><span class="nx">filename</span><span class="p">,</span> <span class="nv">name: </span><span class="nx">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nv">x: </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nv">y: </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])})</span>
+    <span class="p">)()</span>
+    
+
+
+    <span class="c1">#SensorData.remove({})</span>
+    <span class="p">(</span><span class="o">-&gt;</span>
+      <span class="k">return</span> <span class="k">if</span> <span class="nx">SensorData</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nv">file: </span><span class="nx">filename</span><span class="p">})</span>
+      <span class="nx">data</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;public/&#39;</span> <span class="o">+</span> <span class="nx">filename</span> <span class="o">+</span> <span class="s1">&#39;-data.txt&#39;</span><span class="p">)</span>
+      <span class="nx">events</span>  <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\r\n|\r|\n/g</span><span class="p">);</span>
+      <span class="k">for</span> <span class="nx">event</span> <span class="k">in</span> <span class="nx">events</span>
+        <span class="nx">x</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span>
+          <span class="nx">SensorData</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nv">file: </span><span class="nx">filename</span><span class="p">,</span> <span class="nv">type: </span><span class="mi">0</span><span class="p">,</span> <span class="nv">time: </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nv">event: </span><span class="nx">x</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nv">status: </span><span class="nx">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
+        <span class="k">else</span>
+          <span class="nx">SensorData</span><span class="p">.</span><span class="nx">insert</span><span class="p">({</span><span class="nv">file: </span><span class="nx">filename</span><span class="p">,</span> <span class="nv">type: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">time: </span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nv">sensor: </span><span class="nx">x</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="mi">2</span><span class="p">)})</span>
+    <span class="p">)()</span>
+    
+<span class="p">}</span></div></div></div></div></body></html>

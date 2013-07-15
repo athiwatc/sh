@@ -1,0 +1,1 @@
+groc --glob "src/**/*" --except "src/**/lib/*"  --verbose 
