@@ -17,22 +17,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "singleLineComment": ["#"],
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/router.coffee",
-            "projectPath": "client/router.coffee",
-            "targetPath": "client/router",
-            "title": "router"
-          },
-          "depth": 2,
-          "outline": []
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
               "nameMatchers": [".js"],
               "pygmentsLexer": "javascript",
               "singleLineComment": ["//"],
@@ -160,29 +144,23 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "singleLineComment": ["//"],
               "name": "JavaScript"
             },
-            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/sh.js",
-            "projectPath": "client/sh.js",
-            "targetPath": "client/sh",
-            "title": "sh"
-          },
-          "depth": 2,
-          "outline": []
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "singleLineComment": ["#"],
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/subscribe.coffee",
-            "projectPath": "client/subscribe.coffee",
+            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/subscribe.js",
+            "projectPath": "client/subscribe.js",
             "targetPath": "client/subscribe",
             "title": "subscribe"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Subscription",
+                "slug": "subscription"
+              },
+              "depth": 2
+            }
+          ]
         }
       ]
     }, {
@@ -287,6 +265,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "heading",
               "data": {
                 "level": 2,
+                "title": "Code documentation",
+                "slug": "code-documentation"
+              },
+              "depth": 2
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 2,
                 "title": "Notes",
                 "slug": "notes"
               },
@@ -333,6 +319,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "depth": 3
             }
           ]
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 2,
+            "title": "Code documentation",
+            "slug": "code-documentation"
+          },
+          "depth": 2
         }, {
           "type": "heading",
           "data": {
