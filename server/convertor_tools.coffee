@@ -430,6 +430,55 @@ class DataFilter
 						state = state_find_first
 		return storage.toObjectList()
 
+	getAllActivitiesInUnixTime: ()->
+		activity_color_map = new Map()
+		# Format in time stack {name: 'Activity Name', color: 'color to visualize', time: 'unix time of activity'}
+		time_stack = []
+		state_none = -1
+		state_on_activity = 0
+		state = state_none
+		activity_name = ''
+		activity_color = ''
+		activity_time = 0
+		current_time = 0
+		color_id = 2
+		for d in @_data
+			tmp = d.trim().split(/[\s]/)
+			prefix = parseInt(tmp[0])
+			if prefix == 0
+				if state == state_none
+					if tmp[3].toLowerCase() == 'begin'
+						state = state_on_activity
+						activity_name = tmp[2]
+						if !activity_color_map.containsKey(activity_name)
+							activity_color_map.put(activity_name, color_id)
+							color_id += 1
+						activity_color = activity_color_map.get(activity_name)
+						activity_time = @_floorSecondUnixTime(parseInt(tmp[1]))
+					else
+						time_stack.push({name: 'none',color: 1, time: activity_time})
+				else if state == state_on_activity
+					if tmp[3].toLowerCase() == 'end' && tmp[2] == activity_name
+						current_time = @_floorSecondUnixTime(parseInt(tmp[1]))
+						if current_time - activity_time >= 60
+							# Push time in period minute per event
+							while activity_time <= current_time
+								time_stack.push({name: activity_name, color: activity_color, time: activity_time})
+								activity_time += 60
+						else
+							time_stack.push({name: activity_name, color: activity_color, time: activity_time})
+						# Reset activity and state
+						activity_name = ''
+						activity_color = 0
+						activity_time = 0
+						state = state_none
+		return time_stack
+
+	_floorSecondUnixTime: (unixtime)->
+		raw = moment(unixtime)
+		cut_off_second = raw.format("YYYY-MM-DD,HH:mm")
+		convert_to_unix = moment(cut_off_second, "YYYY-MM-DD,HH:mm")
+		return convert_to_unix.unix()
 
 
 class VisualizeParser
@@ -478,15 +527,23 @@ class VisualizeParser
 				data_matrix[index_key][index_val] = d.value
 		fs.writeFileSync('./public/' + path_data, data_text)
 		#fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
-		
+	
+	parseTimeLineMatrix: (data)->
+		path = 'timeline.csv'
+		text = 'name,color,time'
+		for obj in data
+			text += '\r\n' + obj.name + ',' + obj.color + ',' + obj.time
+		fs.writeFileSync('./public/' + path, text)
 
 Meteor.methods({
 	print: ()->
 		sd = new SensorDictionary("all-pos.txt")
 		c = new ConvertorTimelineFormat('raw-data-sh.txt',sd)
 		filter = new DataFilter(c.getData())
-		data_dia = filter.getAllActivitiesInSequencePair()
+		#data_dia = filter.getAllActivitiesInSequencePair()
 		vp = new VisualizeParser()
-		x = vp.parseChordDiagram(data_dia)
-		return 'Success!'
+		#x = vp.parseChordDiagram(data_dia)
+		data_timeline = filter.getAllActivitiesInUnixTime()
+		vp.parseTimeLineMatrix(data_timeline)
+		return data_timeline
 })
