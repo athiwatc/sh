@@ -28,7 +28,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "router"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Router",
+                "slug": "router"
+              },
+              "depth": 2
+            }
+          ]
         }, {
           "type": "folder",
           "data": {
@@ -360,7 +370,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "convertor_tools"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Sensor Dictionary Class",
+                "slug": "sensor-dictionary-class"
+              },
+              "depth": 2
+            }
+          ]
         }, {
           "type": "file",
           "data": {
