@@ -1,25 +1,28 @@
+# ## Coorninate picker
+
 Template.coor.events {
-	#On click the generate button
+	# On click the generate button
 	'click #copyoutput': (e) ->
 		#Prevent the default form action
 		e.preventDefault()
 		i = 0
 		result = ''
-		#Loop while the sensor still exists
+		# Loop while the sensor still exists
 		while true
-			#Get OUT!!!@!@!
+			# Get OUT!!!@!@!
 			break if $('#sensor'+i).length == 0
 			#Store the result from the sensor
 			result += $('#sensor'+i+' [name=sensor]').val() + " " + $('#sensor'+i+' [name=form_x]').val() + " " + $('#sensor'+i+' [name=form_y]').val() + '\n'
 			i += 1
-		#Set the output textarea box
+		# Set the output textarea box
 		$('#output').text(result)
 	'click #loadcoor': ->
-		#Load the image file to the field
+		# Load the image file to the field
 		$('#picture').attr('src', $('#filecoor').val())
 
 }
 
+# Add data to the form.
 @addSensorForm = (x,y)->
 	p = window.prompt("Input a name for the point","NoName");
 	if (p!=null && p!="")
@@ -32,6 +35,7 @@ Template.coor.events {
 		)
 		$("#data_div").attr("counter", parseInt(counter) + 1)
 
+# Call when the user clicks on the image.
 @pointIt = (event)->
 	if event.offsetY
 		pos_x = event.offsetX

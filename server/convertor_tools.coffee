@@ -362,34 +362,6 @@ class DataFilter
 	#format {activity: 'xxx', next_activities: '000'}
 	#next_activities that are possible happened next activities 
 	getAllActivitiesInSequencePair: ()->
-		@_data = ['0 1 Phone_Call begin'
-		,'0 1 Asterick begin'
-		,'0 1 Asterick end'
-		,'0 1 Phone_Call end'
-		,'0 1 Eat begin'
-		,'1 1 Asterick end'
-		,'0 1 Eat end'
-		,'1 1 Asterick end'
-		,'0 1 Phone_Call begin'
-		,'0 1 Phone_Call end'
-		,'1 1 Asterick end'
-		,'0 1 Cook begin'
-		,'0 1 Cook end'
-		,'0 1 Eat begin'
-		,'1 1 Asterick end'
-		,'0 1 Eat end'
-		,'1 1 Asterick end'
-		,'1 1 Asterick end'
-		,'0 1 Phone_Call begin'
-		,'1 1 Asterick end'
-		,'0 1 Phone_Call end'
-		,'0 1 Eat begin'
-		,'1 1 Asterick end'
-		,'0 1 Eat end'
-		,'1 1 Asterick end'
-		,'0 1 Sleep begin'
-		,'0 1 Sleep end'
-		]
 		storage = new Map()
 		#to find first event
 		state_find_first = 1
