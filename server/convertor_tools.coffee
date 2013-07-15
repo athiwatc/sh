@@ -477,9 +477,8 @@ class VisualizeParser
 				index_val = matrix_map.get(d.key)
 				index_key = matrix_map.get(obj.key)
 				data_matrix[index_key][index_val] = d.value
-		return [data_text, data_matrix]
-		#fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
-		#fs.writeFileSync('./public/' + path_data, data_text)
+		fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
+		fs.writeFileSync('./public/' + path_data, data_text)
 
 Meteor.methods({
 	print: ()->
@@ -489,5 +488,5 @@ Meteor.methods({
 		data_dia = filter.getAllActivitiesInSequencePair()
 		vp = new VisualizeParser()
 		x = vp.parseChordDiagram(data_dia)
-		return x
+		return 'Success'
 })
