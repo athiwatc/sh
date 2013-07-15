@@ -1,17 +1,27 @@
 this.fs = Npm.require('fs')
 
+# ## Sensor Dictionary Class
 
+# Overview
+
+# Storage sensor information from text file, which is contained
+# sensor name and sensor position x and y correlate to visual map
 class SensorDictionary
+
+	# Build SensorDictionary object 
 	constructor: (path)->
-		@_dict = [] #format {key:"xx", x: "00",y: "23"}
+		@_dict = [] 
 		@_init(path)
 
 	_init: (path)->
+		# Read file from specific path, actually path is a file name because
+		# all read file must be in ./public/
 		data = fs.readFileSync('./public/' + path, 'utf8')
 		lines = data.toString().split('\r\n')
 		for l in lines
 			if l[0] != '#'
 				tmp = l.split(' ')
+				# format dict['sensor name'] = {x: "x position", y: "y position"}
 				@_dict[tmp[0]] = {x: tmp[1], y: tmp[2]}
 
 
@@ -452,10 +462,13 @@ class VisualizeParser
 			data_matrix.push([])
 			unique_index += 1
 		#gen matrix
-		for d in data_matrix
-			i = 0
-			while i < unique_index
+		i = 0
+		while i < unique_index
+			j = 0
+			while j < unique_index
 				data_matrix[i].push(0)
+				j += 1
+			i += 1
 		
 		#determine val in matrix
 		for obj in data
