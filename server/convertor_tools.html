@@ -438,14 +438,14 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
     <span class="nx">data_matrix</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">matrix_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
     <span class="nx">unique_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nx">color_code</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
-      <span class="nx">random_color</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span><span class="o">+</span><span class="p">(</span><span class="mh">0x1000000</span><span class="o">+</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">())</span><span class="o">*</span><span class="mh">0xffffff</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="mi">16</span><span class="p">).</span><span class="nx">substr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
-      <span class="c1">#random_color = d3.scale.category20(number 1-20)</span>
-      <span class="nx">data_text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">random_color</span>
+      <span class="nx">data_text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">color_code</span>
       <span class="c1">##for making matrix</span>
       <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">unique_index</span><span class="p">)</span>
       <span class="nx">data_matrix</span><span class="p">.</span><span class="nx">push</span><span class="p">([])</span>
-      <span class="nx">unique_index</span> <span class="o">+=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>generate matrix</p></div></div><div class="code"><div class="wrapper">    <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="nx">unique_index</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="nx">color_code</span> <span class="o">+=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>generate matrix</p></div></div><div class="code"><div class="wrapper">    <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">unique_index</span>
       <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span>
       <span class="k">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">unique_index</span>
@@ -458,8 +458,9 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
         <span class="nx">index_val</span> <span class="o">=</span> <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
         <span class="nx">index_key</span> <span class="o">=</span> <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
         <span class="nx">data_matrix</span><span class="p">[</span><span class="nx">index_key</span><span class="p">][</span><span class="nx">index_val</span><span class="p">]</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span>
-    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path_matrix</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data_matrix</span><span class="p">))</span>
     <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path_data</span><span class="p">,</span> <span class="nx">data_text</span><span class="p">)</span>
+    <span class="c1">#fs.writeFileSync(&#39;./public/&#39; + path_matrix, JSON.stringify(data_matrix))</span>
+    
 
 <span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
   <span class="nv">print: </span><span class="p">()</span><span class="o">-&gt;</span>
@@ -469,5 +470,5 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
     <span class="nx">data_dia</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">getAllActivitiesInSequencePair</span><span class="p">()</span>
     <span class="nx">vp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VisualizeParser</span><span class="p">()</span>
     <span class="nx">x</span> <span class="o">=</span> <span class="nx">vp</span><span class="p">.</span><span class="nx">parseChordDiagram</span><span class="p">(</span><span class="nx">data_dia</span><span class="p">)</span>
-    <span class="k">return</span> <span class="s1">&#39;Success&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;Success!&#39;</span>
 <span class="p">})</span></div></div></div></div></body></html>

@@ -1,3 +1,0 @@
-(function(){ Meteor._def_template("coor",Handlebars.json_ast_to_func(["<input id=\"filecoor\" /> <button id=\"loadcoor\" class=\"btn btn-primary\">Load image</button>\n\t<form id=\"pointform\" method=\"post\">\n\t\t\t<div id=\"pointer_div\" onclick=\"pointIt(event)\" style = \"width: auto; height: auto;\">\n\t\t\t\t<img src=\"\" id=\"picture\"/>\n\t\t\t\t<!--img src=\"point.gif\" id=\"cross\" style=\"position:relative;visibility:hidden;z-index:2;\"/-->\n\t\t\t</div>\n\n\t\t\t<div id=\"data_div\" counter=\"0\">\n\t\t\t\t<h2>--Sensor Position--<h2>\n\t\t\t</div>\n\n\t\t<button class=\"btn btn-primary\" id=\"copyoutput\">Generate result</button>\n\t\t</form> \n\t\t----<br>\n\t\t<textarea id=\"output\"></textarea>\n\t\t<br>----"]));
-
-}).call(this);
