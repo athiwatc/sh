@@ -13,6 +13,10 @@ There are two ways that data have to be generated. Note that the example after y
 This is where you convert your data set into the standard data set by using the language of your choice. Please take a look at `public/sample-data.txt` and `public/all-pos.txt`
 ###Second part is automatic
 If you want to add more visualization graph, please look at the client folder and `router.js` and `router.coffee`. The convertor is at `server/convertor_tools.coffee`. Please write everything into `public` folder because the web application can we access by the URL from the root. eg. `http://localhost:3000/my-img.png` will be put in `public/my-img.png`
+
+##Code documentation
+You can find the documentation of the source code at `http://athiwatc.github.io/sh/readme.html`. Please click on the `Table of Content` at the top right to navigate between files.
+
 ##Notes
 1. Even this application works looks like a normal web application but it works like a normal desktop application where not everything can be done in the browser and the browser is mostly used for displaying information only.
 2. There is a mix of javascript and coffeescript as we prefer different language type. Which is not really a big problem into end.
