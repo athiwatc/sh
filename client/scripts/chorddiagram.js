@@ -1,15 +1,22 @@
+// ## Chord Diagram
+// # Credit: http://bost.ocks.org/mike/uberdata/
+
 Template.chorddiagram.rendered = function() {
-    console.log('zzzd')
+    // Set the width and height of the diagram. Along with other factor
     var width = 720,
         height = 720,
         outerRadius = Math.min(width, height) / 2 - 10,
         innerRadius = outerRadius - 24;
+    // Format the persentage to 1 place.
     var formatPercent = d3.format(".1%");
+    // Create the layout and d3 objects
     var arc = d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius);
     var layout = d3.layout.chord().padding(.04).sortSubgroups(d3.descending).sortChords(d3.ascending);
     var path = d3.svg.chord().radius(innerRadius);
     var svg = d3.select("#chorddiagram").append("svg").attr("width", width).attr("height", height).append("g").attr("id", "circle").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    // Add the first circle if it doesn't exists, else change the properties.
     svg.append("circle").attr("r", outerRadius);
+    // Load up two files.
     d3.csv("chorddiagram.csv", function(cities) {
         d3.json("matrix.json", function(matrix) {
             // Compute the chord layout.
