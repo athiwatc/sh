@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><title>client/scripts/visualize</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/scripts/visualize"><meta name="groc-project-path" content="client/scripts/visualize.coffee"><meta name="groc-github-url" content="https://github.com/athiwatc/sh"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/athiwatc/sh/blob/master/client/scripts/visualize.coffee">client/scripts/visualize.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="c1">#$(&#39;#canvas&#39;).css(&#39;background&#39;, &#39;url(/sample-pic.png)&#39;)</span>
+
+<span class="c1">#When the template visualize is rendered</span>
+<span class="c1">#The canvas will be drawn</span>
+<span class="nx">Template</span><span class="p">.</span><span class="nx">visualize</span><span class="p">.</span><span class="nx">rendered</span> <span class="o">=</span> <span class="o">-&gt;</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">sensors</span> <span class="o">=</span> <span class="kc">null</span>
+
+  <span class="c1">#Create the master canvas</span>
+  <span class="c1">#This is where everything begins in the drawing phase</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span> <span class="o">=</span> <span class="nx">oCanvas</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span>
+    <span class="nv">canvas: </span><span class="s2">&quot;#canvas&quot;</span>
+    <span class="nv">fps: </span><span class="mi">1</span>
+  <span class="p">)</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+  <span class="c1">#Create a parrent ellipse object for the child to clone it for faster speed and setting the object less times.</span>
+  <span class="nb">window</span><span class="p">.</span><span class="nx">ellipse</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">display</span><span class="p">.</span><span class="nx">ellipse</span><span class="p">(</span>
+    <span class="nx">x</span><span class="o">:</span><span class="mi">100</span>
+    <span class="nx">y</span><span class="o">:</span><span class="mi">100</span>
+    <span class="nv">radius: </span><span class="mi">15</span>
+    <span class="nv">fill: </span><span class="s2">&quot;rgba(0,0,0,0.1)&quot;</span>
+  <span class="p">)</span>
+
+  <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">setLoop</span> <span class="o">-&gt;</span>
+    <span class="c1">#Get the sensor at the current time</span>
+    <span class="c1">#There should only be one sensor data at any giving time as it already been collapsed</span>
+    <span class="nx">temp</span> <span class="o">=</span> <span class="nx">SensorData</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nv">type: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">time: </span><span class="nb">window</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">.</span><span class="nx">unix</span><span class="p">()})</span>
+    <span class="c1">#Just checking that there&#39;s a sensor at a current time</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">sensors</span> <span class="o">=</span> <span class="nx">temp</span> <span class="k">if</span> <span class="nx">temp</span><span class="o">?</span>
+    <span class="c1">#Loop against all active sensor</span>
+    <span class="k">for</span> <span class="nx">sensor</span> <span class="k">in</span> <span class="nb">window</span><span class="p">.</span><span class="nx">sensors</span><span class="p">.</span><span class="nx">sensor</span>
+      <span class="c1">#console.log sensor</span>
+      <span class="c1">#Fetch the position of each sensorfrom the database</span>
+
+      <span class="nx">pos</span> <span class="o">=</span> <span class="nx">SensorPosition</span><span class="p">.</span><span class="nx">findOne</span><span class="p">({</span><span class="nv">name: </span><span class="nx">sensor</span><span class="p">})</span>
+      <span class="k">if</span> <span class="nx">pos</span><span class="o">?</span> 
+        <span class="c1">#console.log pos #Logging</span>
+        <span class="c1">#Clone the object from the parent to get faster speed</span>
+        <span class="nx">e</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">ellipse</span><span class="p">.</span><span class="nx">clone</span><span class="p">()</span>
+        <span class="c1">#Set the positions</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">x</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">pos</span><span class="p">.</span><span class="nx">y</span>
+
+        <span class="c1">#Add the object to the store</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">e: </span><span class="nx">e</span><span class="p">,</span> <span class="nv">count: </span><span class="mi">0</span><span class="p">})</span>
+
+        <span class="c1">#Add the object to the canvas to prepare for fading</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">addChild</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="mi">60</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span><span class="p">.</span><span class="nx">shift</span><span class="p">().</span><span class="nx">e</span><span class="p">)</span>
+
+    <span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span><span class="p">,</span> <span class="p">(</span><span class="nx">canvasObject</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">-&gt;</span>
+      <span class="nb">window</span><span class="p">.</span><span class="nx">canvasObject</span><span class="p">[</span><span class="nx">index</span><span class="p">].</span><span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="c1">#console.log window.canvasObject[index].count</span>
+      <span class="k">if</span> <span class="nx">canvasObject</span><span class="p">.</span><span class="nx">count</span> <span class="o">&gt;=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">keep</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">canvasObject</span><span class="p">.</span><span class="nx">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">false</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">)</span>
+            
+          
+
+          <span class="c1">#e.fill(&quot;rgba(0,0,0,1)&quot;)</span>
+          <span class="c1">#window.canvasObject.unshift(e)</span>
+          <span class="c1">#window.canvas.removeChild(window.canvasObject.pop()) while (window.canvasObject.length &gt;= 50)</span>
+
+    <span class="nb">window</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">.</span><span class="nx">add</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#currentTime&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">.</span><span class="nx">toString</span><span class="p">())</span>
+
+<span class="nx">Template</span><span class="p">.</span><span class="nx">visualize</span><span class="p">.</span><span class="nx">events</span> <span class="p">{</span>
+  <span class="c1">#Click start</span>
+  <span class="s1">&#39;click .start&#39;</span><span class="o">:</span> <span class="o">-&gt;</span>
+    <span class="c1">#Disable the start button</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.start&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="c1">#Enable the stop button</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.stop&#39;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+    <span class="c1">#Parse the value in the GUI into variables</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">fps</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#speed&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">currentTime</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#currentTime&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">keep</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#keep&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">())</span>
+    <span class="c1">#Start the canvas timeline</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">timeline</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+  <span class="c1">#Click stop</span>
+  <span class="s1">&#39;click .stop&#39;</span><span class="o">:</span> <span class="o">-&gt;</span>
+    <span class="c1">#Disable the stop button</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.stop&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+    <span class="c1">#Enable the start button</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.start&#39;</span><span class="p">).</span><span class="nx">removeAttr</span><span class="p">(</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+    <span class="c1">#Request a stop to the timeline</span>
+    <span class="c1">#It might no be stop right away but that is not a problem</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">timeline</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+  <span class="c1">#Click reset</span>
+  <span class="s1">&#39;click .reset&#39;</span><span class="o">:</span> <span class="o">-&gt;</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">reset</span><span class="p">()</span>
+  <span class="c1">#Called when the new wants to load a new set of files</span>
+  <span class="s1">&#39;click #loadButton&#39;</span><span class="o">:</span> <span class="o">-&gt;</span>
+    <span class="c1">#Remove the image from the canvas</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;background&#39;</span><span class="p">,</span> <span class="s1">&#39;url()&#39;</span><span class="p">)</span>
+
+    <span class="nx">l</span> <span class="o">=</span> <span class="nx">Ladda</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span> <span class="s1">&#39;#loadButton&#39;</span> <span class="p">)</span> <span class="p">)</span>
+    <span class="nx">l</span><span class="p">.</span><span class="nx">start</span><span class="p">()</span>
+
+
+    <span class="c1">#Set the file prefix</span>
+    <span class="nx">filename</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#file&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+
+    <span class="nx">Session</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="nx">filename</span><span class="p">)</span>
+    
+    <span class="c1">#Call the meteor on the server to load the set of files and when finish load up the background image to the canvas</span>
+    <span class="nx">Meteor</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="nx">filename</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="s1">&#39;background&#39;</span><span class="p">,</span> <span class="s1">&#39;url(/&#39;</span><span class="o">+</span><span class="nx">filename</span><span class="o">+</span><span class="s1">&#39;-pic.png)&#39;</span><span class="p">)</span>
+      <span class="nx">img</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+      <span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="o">-&gt;</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span><span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#canvas&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">)</span>
+
+      <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">+</span><span class="nx">filename</span><span class="o">+</span><span class="s1">&#39;-pic.png&#39;</span><span class="p">;</span>
+      <span class="nx">l</span><span class="p">.</span><span class="nx">stop</span><span class="p">()</span>
+    <span class="p">)</span>
+<span class="p">}</span></div></div></div></div></body></html>
