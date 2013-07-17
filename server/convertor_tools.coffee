@@ -604,13 +604,21 @@ class VisualizationParser
 
 Meteor.methods({
 	print: ()->
-		sd = new SensorDictionary("all-pos.txt")
-		c = new ConvertorTimelineFormat('raw-data-sh.txt',sd)
-		processor = new DataProcessor(c.getData())
+		#sd = new SensorDictionary("all-pos.txt")
+		#c = new ConvertorTimelineFormat('raw-data-sh.txt',sd)
+		#processor = new DataProcessor(c.getData())
 		# data_dia = processor.getAllActivitiesInSequencePair()
-		vp = new VisualizationParser()
+		#vp = new VisualizationParser()
 		# x = vp.parseChordDiagram(data_dia)
-		data_timeline = processor.getAllActivitiesInUnixTime()
-		vp.parseTimeLineMatrix(data_timeline)
-		return data_timeline
+		#data_timeline = processor.getAllActivitiesInUnixTime()
+		#vp.parseTimeLineMatrix(data_timeline)
+		#return data_timeline
+
+	getAllUploadedFilesName: ()->
+		return fs.readdirSync('./public/uploaded-files~')
+
+	deleteFile: (name)->
+		fs.unlinkSync('./public/uploaded-files~/' + name)
+		return true
 })
+
