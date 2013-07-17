@@ -8,116 +8,72 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
     <span class="nx">lines</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\r\n&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="nx">l</span> <span class="k">in</span> <span class="nx">lines</span>
       <span class="k">if</span> <span class="nx">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;#&#39;</span>
-        <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>format dict['sensor name'] = {x: "x position", y: "y position"}</p></div></div><div class="code"><div class="wrapper">        <span class="err">@</span><span class="nx">_dict</span><span class="p">[</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="nv">x: </span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nv">y: </span><span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
-
-
-
-  <span class="nv">containsKey: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+        <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Format dict['sensor name'] = {x: "x position", y: "y position"}</p></div></div><div class="code"><div class="wrapper">        <span class="err">@</span><span class="nx">_dict</span><span class="p">[</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="nv">x: </span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nv">y: </span><span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check a key that is in this dictionary or not</p></div></div><div class="code"><div class="wrapper">  <span class="nv">containsKey: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="k">return</span> <span class="err">@</span><span class="nx">_dict</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">undefined</span>
-  
-  <span class="nv">getXPOS: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get x position of key</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getXPOS: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="k">if</span> <span class="err">@</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
       <span class="k">return</span> <span class="err">@</span><span class="nx">_dict</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">x</span><span class="p">;</span>
-    <span class="k">return</span> <span class="kc">undefined</span>
-
-  <span class="nv">getYPOS: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="kc">undefined</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get y position of key</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getYPOS: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="k">if</span> <span class="err">@</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
       <span class="k">return</span> <span class="err">@</span><span class="nx">_dict</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nx">y</span><span class="p">;</span>
-    <span class="k">return</span> <span class="kc">undefined</span>
+    <span class="k">return</span> <span class="kc">undefined</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="convertor-class">Convertor Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To convert data
+From format: 
+Date Time Sensor<em>Name Status
+or
+Date Time Activity</em>Name Status</p></div></div><div class="code"><div class="wrapper"><span class="c1">#</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>2008-02-27    12:45:14.498824 M13 OFF
+2008-02-27    12:49:15 asterisk END
+To:
+1 Unixtime xPos yPos sensor<em>name sensor</em>status
+0 Unixtime event<em>name event</em>status</p></div></div><div class="code"><div class="wrapper"><span class="c1">#</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>1 1204112862 683 123 M13 OFF
+0 1204116555 asterisk START 
+Line of data that is a sensor activation, its converted format data would put prefix '1' in the front
+List of data that is a activity, convert, its converted format data would put prefix '0' in the front</p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">Convertor</span>
 
-<span class="c1">###</span>
-<span class="nx">Use</span> <span class="nx">to</span> <span class="nx">convert</span> <span class="nx">data</span>
-<span class="nx">From</span> <span class="nv">format: </span>
-<span class="nb">Date</span> <span class="nx">Time</span> <span class="nx">Sensor_Name</span> <span class="nx">Status</span>
-<span class="o">or</span>
-<span class="nb">Date</span> <span class="nx">Time</span> <span class="nx">Activity_Name</span> <span class="nx">Status</span>
-
-<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">27</span>  <span class="mi">12</span><span class="o">:</span><span class="mi">45</span><span class="o">:</span><span class="mf">14.498824</span> <span class="nx">M13</span> <span class="nx">OFF</span>
-<span class="mi">2008</span><span class="o">-</span><span class="mi">02</span><span class="o">-</span><span class="mi">27</span>  <span class="mi">12</span><span class="o">:</span><span class="mi">49</span><span class="o">:</span><span class="mi">15</span> <span class="nx">asterisk</span> <span class="nx">END</span>
-<span class="nv">To:</span>
-<span class="mi">1</span> <span class="nx">Unixtime</span> <span class="nx">xPos</span> <span class="nx">yPos</span> <span class="nx">sensor_name</span> <span class="nx">sensor_status</span>
-<span class="mi">0</span> <span class="nx">Unixtime</span> <span class="nx">event_name</span> <span class="nx">event_status</span>
-
-<span class="mi">1</span> <span class="mi">1204112862</span> <span class="mi">683</span> <span class="mi">123</span> <span class="nx">M13</span> <span class="nx">OFF</span>
-<span class="mi">0</span> <span class="mi">1204116555</span> <span class="nx">asterisk</span> <span class="nx">START</span> 
-
-<span class="nx">Line</span> <span class="k">of</span> <span class="nx">data</span> <span class="nx">that</span> <span class="o">is</span> <span class="nx">a</span> <span class="nx">sensor</span> <span class="nx">activation</span><span class="p">,</span> <span class="nx">its</span> <span class="nx">converted</span> <span class="nx">format</span> <span class="nx">data</span> <span class="nx">would</span> <span class="nx">put</span> <span class="nx">prefix</span> <span class="s1">&#39;1&#39;</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">front</span>
-<span class="nx">List</span> <span class="k">of</span> <span class="nx">data</span> <span class="nx">that</span> <span class="o">is</span> <span class="nx">a</span> <span class="nx">activity</span><span class="p">,</span> <span class="nx">convert</span><span class="p">,</span> <span class="nx">its</span> <span class="nx">converted</span> <span class="nx">format</span> <span class="nx">data</span> <span class="nx">would</span> <span class="nx">put</span> <span class="nx">prefix</span> <span class="s1">&#39;0&#39;</span> <span class="k">in</span> <span class="nx">the</span> <span class="nx">front</span>
-<span class="c1">###</span>
-<span class="nx">class</span> <span class="nx">Convertor</span>
-
-  
-  <span class="c1">#Initial path file to convert and sensor dictionary</span>
-  <span class="c1">#params _path: file path</span>
-  <span class="c1">#params _sensor_dict: SensorDictionary object for sensor dictionary</span>
-  <span class="nv">constructor: </span><span class="p">(</span><span class="err">@</span><span class="nx">_path</span><span class="p">,</span> <span class="err">@</span><span class="nx">_sensor_dict</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initial path file to convert and sensor dictionary</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="p">(</span><span class="err">@</span><span class="nx">_path</span><span class="p">,</span> <span class="err">@</span><span class="nx">_sensor_dict</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="p">[]</span>   
     <span class="err">@</span><span class="nx">_preProcessingData</span><span class="p">()</span>
-  
-  <span class="c1">#Get list of new format data</span>
-  <span class="c1">#return list of new format data</span>
-  <span class="nv">getData: </span><span class="p">()</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get list of converted data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getData: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
       <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-
-  <span class="c1">#Preprocessing data by read and convert data</span>
-  <span class="nv">_preProcessingData: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">result</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Preprocessing data by read and convert data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_preProcessingData: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">tmp_data</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="err">@</span><span class="nx">_path</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
     <span class="nx">lines</span> <span class="o">=</span> <span class="nx">tmp_data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="nx">l</span> <span class="k">in</span> <span class="nx">lines</span>
       <span class="err">@</span><span class="nx">_data</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">l</span><span class="p">)</span>
     <span class="err">@</span><span class="nx">_convertData</span><span class="p">()</span>
   
-  
-  <span class="c1">#Convert data</span>
-  <span class="nv">_convertData: </span><span class="p">()</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert data using in preprocessing</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_convertData: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">output</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="nx">line</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
-      <span class="c1">#clear indent and space</span>
-      <span class="c1">#buffer = line.replace(&quot;(\s+)&quot;, &quot; &quot;)</span>
       <span class="nx">temp</span> <span class="o">=</span> <span class="nx">line</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
       <span class="nx">is_zero</span> <span class="o">=</span> <span class="kc">true</span>
-      <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="nx">temp</span>
-        <span class="k">if</span> <span class="err">@</span><span class="nx">_sensor_dict</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-          <span class="nx">result</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_processArrayForPrefixOne</span><span class="p">(</span><span class="nx">temp</span><span class="p">)</span>
+      <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="nx">temp</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check each line of data is a sensor data
+or an activity data</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="err">@</span><span class="nx">_sensor_dict</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If it is a sensor data, it will transform data
+with prefix 1</p></div></div><div class="code"><div class="wrapper">          <span class="nx">result</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_processArrayForPrefixOne</span><span class="p">(</span><span class="nx">temp</span><span class="p">)</span>
           <span class="nx">output</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_parseString</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
-          <span class="nx">is_zero</span> <span class="o">=</span> <span class="kc">false</span>
-          <span class="k">if</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">4</span>
+          <span class="nx">is_zero</span> <span class="o">=</span> <span class="kc">false</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>For some data that has both sensor and activity data</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">4</span>
             <span class="nx">addition</span> <span class="o">=</span> <span class="p">[</span><span class="nx">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nx">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nx">temp</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="nx">temp</span><span class="p">[</span><span class="mi">5</span><span class="p">]]</span>
             <span class="nx">result</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_processArrayForPrefixZero</span><span class="p">(</span><span class="nx">addition</span><span class="p">)</span>
             <span class="nx">output</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_parseString</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
-          <span class="k">break</span>
-      <span class="k">if</span> <span class="nx">is_zero</span> <span class="o">&amp;&amp;</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">2</span>
+          <span class="k">break</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If it is an activity data, it will transform data
+with prefix 0</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">is_zero</span> <span class="o">&amp;&amp;</span> <span class="nx">temp</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">2</span>
         <span class="nx">result</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_processArrayForPrefixZero</span><span class="p">(</span><span class="nx">temp</span><span class="p">)</span>
         <span class="nx">output</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_parseString</span><span class="p">(</span><span class="nx">result</span><span class="p">))</span>
-    <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="nx">output</span>
-
-  <span class="c1">#Convert data array to one string</span>
-  <span class="c1">#params arr: array of data</span>
-  <span class="c1">#return string format of data array</span>
-  <span class="nv">_parseString: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="nx">output</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert data array to one string. Use for computing
+represented it to simple string</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_parseString: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="k">for</span> <span class="nx">a</span> <span class="k">in</span> <span class="nx">arr</span>
       <span class="nx">s</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nx">a</span>
     <span class="k">return</span> <span class="nx">s</span>
-  
-  <span class="c1">#Convert data array of activity</span>
-  <span class="c1">#params arr: data array of activity</span>
-  <span class="c1">#return converted data</span>
-  <span class="nv">_processArrayForPrefixZero: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert data array of activity</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_processArrayForPrefixZero: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_convertStringDateToUnix</span><span class="p">(</span><span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">arr</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="nx">result</span>
-  
-  <span class="c1">#Convert data array of sensor activation</span>
-  <span class="c1">#params arr: data array of activity</span>
-  <span class="c1">#return converted data</span>
-  <span class="nv">_processArrayForPrefixOne: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert data array of sensor activation</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_processArrayForPrefixOne: </span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
     <span class="c1">#date to unix</span>
@@ -127,183 +83,119 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
     <span class="nx">result</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="nx">result</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
     <span class="k">return</span> <span class="nx">result</span>
-  
-  <span class="c1">#Convert date and time to Unixtime</span>
-  <span class="c1">#params ymd: year-month-day Ex. 2008-12-08</span>
-  <span class="c1">#params time: time Ex. 12:45:14</span>
-  <span class="c1">#return Unixtime</span>
-  <span class="nv">_convertStringDateToUnix: </span><span class="p">(</span><span class="nx">ymd</span><span class="p">,</span> <span class="nx">time</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert date and time to Unixtime</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_convertStringDateToUnix: </span><span class="p">(</span><span class="nx">ymd</span><span class="p">,</span> <span class="nx">time</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">t</span> <span class="o">=</span> <span class="nx">time</span>
     <span class="nx">s</span> <span class="o">=</span> <span class="nx">ymd</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="nx">t</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s2">&quot;YYYY-MM-DD,HH:mm:ss&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-
-<span class="c1">###</span>
-<span class="nx">Use</span> <span class="nx">to</span> <span class="nx">convert</span> <span class="nx">data</span> <span class="nx">to</span> <span class="nx">timeline</span> <span class="nx">format</span> <span class="p">(</span><span class="nx">Standard</span> <span class="nx">format</span> <span class="k">for</span> <span class="k">this</span> <span class="nx">application</span><span class="p">)</span>
-<span class="nx">From</span> <span class="nv">format: </span><span class="p">(</span><span class="nx">Converted</span> <span class="nx">data</span> <span class="nx">format</span> <span class="nx">from</span> <span class="nx">Convertor</span> <span class="nx">Class</span><span class="p">)</span>
-<span class="mi">1</span> <span class="mi">1204112607</span> <span class="mi">568</span> <span class="mi">231</span> <span class="nx">M08</span> <span class="nx">ON</span> 
-<span class="mi">1</span> <span class="mi">1204112607</span> <span class="mi">503</span> <span class="mi">197</span> <span class="nx">M07</span> <span class="nx">ON</span> 
-<span class="mi">1</span> <span class="mi">1204112608</span> <span class="mi">592</span> <span class="mi">197</span> <span class="nx">M09</span> <span class="nx">ON</span> 
-<span class="mi">1</span> <span class="mi">1204112609</span> <span class="mi">683</span> <span class="mi">197</span> <span class="nx">M14</span> <span class="nx">ON</span> 
-<span class="mi">1</span> <span class="mi">1204112609</span> <span class="mi">484</span> <span class="mi">291</span> <span class="nx">M23</span> <span class="nx">OFF</span> 
-<span class="mi">1</span> <span class="mi">1204112610</span> <span class="mi">484</span> <span class="mi">261</span> <span class="nx">M01</span> <span class="nx">OFF</span> 
-<span class="mi">1</span> <span class="mi">1204112610</span> <span class="mi">503</span> <span class="mi">197</span> <span class="nx">M07</span> <span class="nx">OFF</span> 
-<span class="mi">1</span> <span class="mi">1204112611</span> <span class="mi">683</span> <span class="mi">123</span> <span class="nx">M13</span> <span class="nx">ON</span> 
-<span class="mi">1</span> <span class="mi">1204112611</span> <span class="mi">568</span> <span class="mi">231</span> <span class="nx">M08</span> <span class="nx">OFF</span> 
-<span class="mi">1</span> <span class="mi">1204112612</span> <span class="mi">592</span> <span class="mi">197</span> <span class="nx">M09</span> <span class="nx">OFF</span> 
-<span class="mi">1</span> <span class="mi">1204112613</span> <span class="mi">683</span> <span class="mi">197</span> <span class="nx">M14</span> <span class="nx">OFF</span>
-<span class="mi">0</span> <span class="mi">1204112620</span> <span class="nx">Phone_call</span> <span class="nx">begin</span>
-
-<span class="nv">To:</span>
-<span class="nx">Prefix</span> <span class="nx">Unixtime</span> <span class="p">[</span><span class="nx">Active</span> <span class="nx">Sensors</span> <span class="o">or</span> <span class="nx">Activity</span><span class="p">]</span> <span class="p">[</span><span class="nx">Activity</span> <span class="nx">status</span> <span class="k">if</span> <span class="nx">it</span> <span class="o">is</span> <span class="nx">activity</span><span class="p">]</span>
-<span class="mi">1</span> <span class="mi">1204112607</span> <span class="nx">M07</span> <span class="nx">M08</span> 
-<span class="mi">1</span> <span class="mi">1204112608</span> <span class="nx">M07</span> <span class="nx">M08</span> <span class="nx">M09</span> 
-<span class="mi">1</span> <span class="mi">1204112609</span> <span class="nx">M07</span> <span class="nx">M08</span> <span class="nx">M09</span> <span class="nx">M14</span> 
-<span class="mi">1</span> <span class="mi">1204112610</span> <span class="nx">M08</span> <span class="nx">M09</span> <span class="nx">M14</span>
-<span class="mi">0</span> <span class="mi">1204112620</span> <span class="nx">Phone_call</span> <span class="nx">begin</span>
-<span class="c1">###</span>
-<span class="nx">class</span> <span class="nx">ConvertorTimelineFormat</span> <span class="k">extends</span> <span class="nx">Convertor</span>
-  
-  <span class="c1">#Override</span>
-  <span class="nv">_preProcessingData: </span><span class="p">()</span> <span class="o">-&gt;</span>
-    <span class="c1">#call _preProcessingData from Super class</span>
-    <span class="k">super</span>
-    <span class="c1">#array of sensor status for checking data in convert process</span>
-    <span class="err">@</span><span class="nx">_check_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="s2">&quot;OPEN&quot;</span><span class="p">,</span> <span class="s2">&quot;PRESENT&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nx">result</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="convertor-timeline-format-class">Convertor Timeline Format Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use to convert data to timeline format (Standard format for this application)
+From format: (Converted data format from Convertor Class)
+1 1204112607 568 231 M08 ON 
+1 1204112607 503 197 M07 ON 
+1 1204112608 592 197 M09 ON 
+1 1204112609 683 197 M14 ON 
+1 1204112609 484 291 M23 OFF 
+1 1204112610 484 261 M01 OFF 
+1 1204112610 503 197 M07 OFF 
+1 1204112611 683 123 M13 ON 
+1 1204112611 568 231 M08 OFF 
+1 1204112612 592 197 M09 OFF 
+1 1204112613 683 197 M14 OFF
+0 1204112620 Phone<em>call begin
+To:
+Prefix Unixtime [Active Sensors or Activity] [Activity status if it is activity]
+1 1204112607 M07 M08 
+1 1204112608 M07 M08 M09 
+1 1204112609 M07 M08 M09 M14 
+1 1204112610 M08 M09 M14
+0 1204112620 Phone</em>call begin</p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">ConvertorTimelineFormat</span> <span class="k">extends</span> <span class="nx">Convertor</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Override to super class (Convertor Class)</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_preProcessingData: </span><span class="p">()</span> <span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Call _preProcessingData from Super class</p></div></div><div class="code"><div class="wrapper">    <span class="k">super</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Array of sensor status for checking data in convert process</p></div></div><div class="code"><div class="wrapper">    <span class="err">@</span><span class="nx">_check_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ON&quot;</span><span class="p">,</span> <span class="s2">&quot;OPEN&quot;</span><span class="p">,</span> <span class="s2">&quot;PRESENT&quot;</span><span class="p">]</span>
     <span class="err">@</span><span class="nx">_check_off</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="s2">&quot;CLOSE&quot;</span><span class="p">,</span> <span class="s2">&quot;ABSENT&quot;</span><span class="p">]</span>
-    <span class="err">@</span><span class="nx">_convertToTimeline</span><span class="p">()</span>
-
-  <span class="c1">#Convert to timeline data</span>
-  <span class="nv">_convertToTimeline: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="nx">on_sensor</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">()</span>
+    <span class="err">@</span><span class="nx">_convertToTimeline</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert to timeline data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_convertToTimeline: </span><span class="p">()</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Init empty Set of sensor, which status is on</p></div></div><div class="code"><div class="wrapper">    <span class="nx">on_sensor</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Set</span><span class="p">()</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="err">@</span><span class="nx">_data</span><span class="p">.</span><span class="nx">length</span>
       <span class="nx">tmp</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
       <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-      <span class="nx">element</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">trim</span><span class="p">())</span>
-      <span class="k">else</span> <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">1</span>
+      <span class="nx">element</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Activity data is unnecessary to convert</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">trim</span><span class="p">())</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sensor data needs to convert</p></div></div><div class="code"><div class="wrapper">      <span class="k">else</span> <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="nx">time</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="nx">sensor_name</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-        <span class="nx">sensor_status</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
-        <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">sensor_status</span><span class="p">,</span> <span class="err">@</span><span class="nx">_check_on</span><span class="p">)</span>
-          <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">sensor_name</span><span class="p">)</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">sensor_status</span><span class="p">,</span> <span class="err">@</span><span class="nx">_check_off</span><span class="p">)</span>
-          <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">sensor_name</span><span class="p">)</span>
-        <span class="nx">element</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_buildStringPrefixOne</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">toList</span><span class="p">())</span>
+        <span class="nx">sensor_status</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add sensor that status is on to Set</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">sensor_status</span><span class="p">,</span> <span class="err">@</span><span class="nx">_check_on</span><span class="p">)</span>
+          <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">sensor_name</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove sensor that status is off from Set</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span> <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">sensor_status</span><span class="p">,</span> <span class="err">@</span><span class="nx">_check_off</span><span class="p">)</span>
+          <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">sensor_name</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build a string, which is time correlate with Set of on status sensor</p></div></div><div class="code"><div class="wrapper">        <span class="nx">element</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_buildStringPrefixOne</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">on_sensor</span><span class="p">.</span><span class="nx">toList</span><span class="p">())</span>
         <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="err">@</span><span class="nx">_data</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
           <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
-        <span class="k">else</span>
-          <span class="nx">next_data</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
+        <span class="k">else</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A method to check a same sensor changes status at same time or not
+to check this, it must use the next line of data and current line of data</p></div></div><div class="code"><div class="wrapper">          <span class="nx">next_data</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
           <span class="nx">next_data_prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">next_data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
           <span class="nx">next_data_time</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">next_data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
           <span class="k">if</span> <span class="nx">next_data_prefix</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">next_data_time</span> <span class="o">!=</span> <span class="nx">time</span> <span class="o">||</span> <span class="err">@</span><span class="nx">_isSameSensorChangeAtTheSameTime</span><span class="p">(</span><span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">trim</span><span class="p">(),</span><span class="err">@</span><span class="nx">_data</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">].</span><span class="nx">trim</span><span class="p">())</span>
             <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
       <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="nx">result</span>
-  
-  <span class="c1">#Checking element in array</span>
-  <span class="c1">#params s1: element that want to check</span>
-  <span class="c1">#params set: array</span>
-  <span class="c1">#return true if element is in array; otherwise false</span>
-  <span class="nv">_isIn: </span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">set</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Checking element in array</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_isIn: </span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">set</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">set</span>
       <span class="k">if</span> <span class="nx">i</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">true</span>
-    <span class="k">return</span> <span class="kc">false</span>
-
-  <span class="c1">#Convert data array to one string for sensor activation</span>
-  <span class="c1">#params time: time of activation</span>
-  <span class="c1">#params set: set of sensor name</span>
-  <span class="c1">#return string format of data array</span>
-  <span class="nv">_buildStringPrefixOne: </span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">set</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="kc">false</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert data array to one string for sensor activation</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_buildStringPrefixOne: </span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="nx">set</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">output</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot;1 &quot;</span> <span class="o">+</span> <span class="nx">time</span>
     <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="nx">set</span>
       <span class="nx">output</span> <span class="o">+=</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">s</span>
     <span class="k">return</span> <span class="nx">output</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
-  
-  <span class="c1">#To check a sensor is changed status at the same time or not</span>
-  <span class="c1">#params s1: first data that want to check </span>
-  <span class="c1">#params s2: next data that want to check</span>
-  <span class="nv">_isSameSensorChangeAtTheSameTime: </span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">)</span><span class="o">-&gt;</span>
-    <span class="nx">first</span> <span class="o">=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
-    <span class="nx">second</span> <span class="o">=</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">second</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-      <span class="k">return</span> <span class="kc">false</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="o">!</span><span class="nx">first</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="nx">second</span><span class="p">[</span><span class="mi">4</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span>
-      <span class="k">return</span> <span class="kc">false</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="err">@</span><span class="nx">_check_on</span><span class="p">)</span> <span class="o">||</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="err">@</span><span class="nx">_check_off</span><span class="p">)</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check a sensor is changed status at the same time or not</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_isSameSensorChangeAtTheSameTime: </span><span class="p">(</span><span class="nx">s1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">)</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>s1 is a first data, s2 is a second data in next line of data</p></div></div><div class="code"><div class="wrapper">    <span class="nx">first</span> <span class="o">=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
+    <span class="nx">second</span> <span class="o">=</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check is a same time or not</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">second</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="k">return</span> <span class="kc">false</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check is a same sensor or not</p></div></div><div class="code"><div class="wrapper">    <span class="k">else</span> <span class="k">if</span> <span class="o">!</span><span class="nx">first</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="nx">second</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+      <span class="k">return</span> <span class="kc">false</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check sensor status is change in the same time or not</p></div></div><div class="code"><div class="wrapper">    <span class="k">else</span> <span class="k">if</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="err">@</span><span class="nx">_check_on</span><span class="p">)</span> <span class="o">||</span> <span class="err">@</span><span class="nx">_isIn</span><span class="p">(</span><span class="nx">first</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="err">@</span><span class="nx">_check_off</span><span class="p">)</span>
       <span class="k">return</span> <span class="o">!</span><span class="nx">first</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="nx">second</span><span class="p">[</span><span class="mi">5</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span>
     <span class="k">return</span> <span class="kc">false</span>
-  
-
-<span class="nx">class</span> <span class="nx">Set</span>
-  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="err">@</span><span class="nx">_storage</span> <span class="o">=</span> <span class="p">[]</span>
-
-  <span class="nv">add: </span><span class="p">(</span><span class="nx">element</span><span class="p">)</span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="set-class">Set Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Data structure that is storage any type of element
+it is a collection that contains no duplicate elements</p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">Set</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initial list to storage data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_storage</span> <span class="o">=</span> <span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add new element to Set, but it always check that
+new element duplicates to element in Set or not;
+it uses to prevent duplicated data in Set</p></div></div><div class="code"><div class="wrapper">  <span class="nv">add: </span><span class="p">(</span><span class="nx">element</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">isThere</span> <span class="o">=</span> <span class="kc">false</span>
     <span class="k">for</span> <span class="nx">e</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_storage</span>
       <span class="k">if</span> <span class="nx">e</span> <span class="o">==</span> <span class="nx">element</span>
         <span class="nx">isThere</span> <span class="o">=</span> <span class="kc">true</span>
         <span class="k">break</span>
     <span class="k">if</span> <span class="o">!</span><span class="nx">isThere</span>
-      <span class="err">@</span><span class="nx">_storage</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span>
-
-  <span class="nv">remove: </span><span class="p">(</span><span class="nx">element</span><span class="p">)</span><span class="o">-&gt;</span>
+      <span class="err">@</span><span class="nx">_storage</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove specific element from Set</p></div></div><div class="code"><div class="wrapper">  <span class="nv">remove: </span><span class="p">(</span><span class="nx">element</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">arr</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="nx">e</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_storage</span>
       <span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="nx">element</span>
         <span class="nx">arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
-    <span class="err">@</span><span class="nx">_storage</span> <span class="o">=</span> <span class="nx">arr</span>
-
-  <span class="nv">toList: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_storage</span> <span class="o">=</span> <span class="nx">arr</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return list of element</p></div></div><div class="code"><div class="wrapper">  <span class="nv">toList: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_storage</span>
       <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-
-  <span class="nv">size: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="k">return</span> <span class="err">@</span><span class="nx">_storage</span><span class="p">.</span><span class="nx">length</span>
-
-
-<span class="nx">class</span> <span class="nx">Map</span>
-  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">result</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get current Set length</p></div></div><div class="code"><div class="wrapper">  <span class="nv">size: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="err">@</span><span class="nx">_storage</span><span class="p">.</span><span class="nx">length</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="map-class">Map Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Data structure that is storage pairing data (key,value)
+An object that maps keys to values. 
+A map cannot contain duplicate keys; each key can map to at most one value.</p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">Map</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initial keys and values list</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="err">@</span><span class="nx">_keys</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="err">@</span><span class="nx">_values</span> <span class="o">=</span> <span class="p">[]</span>
-
-  <span class="nv">containsKey: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_values</span> <span class="o">=</span> <span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To check it has this key or not</p></div></div><div class="code"><div class="wrapper">  <span class="nv">containsKey: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="k">if</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
       <span class="k">return</span> <span class="kc">false</span>
-    <span class="k">return</span> <span class="kc">true</span>
-
-  <span class="nv">put: </span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Associated specified value with the specified key in this map
+if it has a key previously, the associated value to the key will
+be replaced by new one.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">put: </span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">index</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
     <span class="k">if</span> <span class="nx">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
       <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
       <span class="err">@</span><span class="nx">_values</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
     <span class="k">else</span>
-      <span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
-
-  <span class="nv">size: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="k">return</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">length</span>
-
-  <span class="nv">get: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+      <span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return length of this Map</p></div></div><div class="code"><div class="wrapper">  <span class="nv">size: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">length</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get value with specific key</p></div></div><div class="code"><div class="wrapper">  <span class="nv">get: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">index</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-    <span class="k">return</span> <span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
-
-  <span class="nv">toObjectList: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return data to object list with element format as follow
+{key: '', value: ''}</p></div></div><div class="code"><div class="wrapper">  <span class="nv">toObjectList: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">length</span>
       <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">key: </span><span class="err">@</span><span class="nx">_keys</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nv">value: </span><span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">i</span><span class="p">]})</span>
       <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="nx">result</span>
-
-  <span class="nv">remove: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">result</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove key from Map, including associated value</p></div></div><div class="code"><div class="wrapper">  <span class="nv">remove: </span><span class="p">(</span><span class="nx">key</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">except_index</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_keys</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
     <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="nx">new_keys</span> <span class="o">=</span> <span class="p">[]</span>
@@ -314,113 +206,63 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
         <span class="nx">new_values</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="err">@</span><span class="nx">_values</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
       <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="err">@</span><span class="nx">_keys</span> <span class="o">=</span> <span class="nx">new_keys</span>
-    <span class="err">@</span><span class="nx">_values</span> <span class="o">=</span> <span class="nx">new_values</span>
-
-<span class="nx">class</span> <span class="nx">DataFilter</span>
-  <span class="nv">constructor: </span><span class="p">(</span><span class="err">@</span><span class="nx">_data</span><span class="p">)</span><span class="o">-&gt;</span>
-
-  <span class="nv">getData: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_values</span> <span class="o">=</span> <span class="nx">new_values</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="data-processor-class">Data Processor Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use to derive specific data from the input data.
+It gets data that will use in parsing visualization section </p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">DataProcessor</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initial input data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="p">(</span><span class="err">@</span><span class="nx">_data</span><span class="p">)</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get current input data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getData: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="nx">s</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
       <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-
-  <span class="nv">setData: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
-    <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="nx">data</span>
-
-  <span class="c1">#get all activities and number of times</span>
-  <span class="c1">#format {activity: &#39;xxx&#39;, count: &#39;000&#39;}</span>
-  <span class="nv">getAllActivities: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">result</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set new input data</p></div></div><div class="code"><div class="wrapper">  <span class="nv">setData: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="nx">data</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get all activities and number of times from input data
+format {key: activity, value: number of times} in returned object list</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getAllActivities: </span><span class="p">()</span><span class="o">-&gt;</span>
     <span class="nx">storage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
     <span class="k">for</span> <span class="nx">d</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
       <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
-      <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;end&#39;</span>
+      <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>All activity data have prefix 0
+and count occuring times by count 'end' of activity</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;end&#39;</span>
         <span class="nx">activity</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">if</span> <span class="o">!</span><span class="nx">storage</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">activity</span><span class="p">)</span>
           <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">else</span>
           <span class="nx">count</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">activity</span><span class="p">)</span>
           <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">activity</span><span class="p">,</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span>
-
-  <span class="c1">#get all sequence activities pair</span>
-  <span class="c1">#format {activity: &#39;xxx&#39;, next_activities: &#39;000&#39;}</span>
-  <span class="c1">#next_activities that are possible happened next activities </span>
-  <span class="nv">getAllActivitiesInSequencePair: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="err">@</span><span class="nx">_data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;0 1 Phone_Call begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Asterick begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Phone_Call end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Phone_Call begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Phone_Call end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Cook begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Cook end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Phone_Call begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Phone_Call end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Eat end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;1 1 Asterick end&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Sleep begin&#39;</span>
-      <span class="p">,</span><span class="s1">&#39;0 1 Sleep end&#39;</span>
-    <span class="p">]</span>
-    <span class="nx">storage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
-    <span class="c1">#to find first event</span>
-    <span class="nx">state_find_first</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="c1">#to find second event that happened next to first event</span>
-    <span class="nx">state_find_second</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="nx">state_none</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
-    <span class="nx">first_activity</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-    <span class="nx">second_activity</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">return</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get all sequence activities pair
+finding main activity and then finding all what activity is possible happened next to main activity
+it's called 'next<em>activity'
+format {key: main</em>activity, value: Map(next_activity, number of times) } in returned object list</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getAllActivitiesInSequencePair: </span><span class="p">()</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This method is based on finite-state machine to compute</p></div></div><div class="code"><div class="wrapper">    <span class="nx">storage</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State to find first event (main activity)</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state_find_first</span> <span class="o">=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State to find second event (next activity)</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state_find_second</span> <span class="o">=</span> <span class="mi">2</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State that nothing happened</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state_none</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State variable</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Main activity</p></div></div><div class="code"><div class="wrapper">    <span class="nx">first_activity</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Next activity</p></div></div><div class="code"><div class="wrapper">    <span class="nx">second_activity</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="k">for</span> <span class="nx">d</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
       <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
       <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">#&amp;&amp; tmp[3].toLowerCase() != &#39;end&#39;</span>
-        <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_none</span>
-          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
-            <span class="nx">first_activity</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_first</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_find_first</span>
-          <span class="k">if</span> <span class="nx">first_activity</span> <span class="o">==</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span>
-            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_second</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_find_second</span>
-          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
-            <span class="nx">second_activity</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="nx">second_map</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-            <span class="k">if</span> <span class="o">!</span><span class="nx">storage</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">)</span>
-              <span class="nx">second_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
-              <span class="nx">second_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">else</span>
-              <span class="nx">second_map</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">)</span>
-              <span class="k">if</span> <span class="o">!</span><span class="nx">second_map</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">switch</span> <span class="nx">state</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In state<em>none is used to find main activity happened
+and then it will change state to state</em>find_first</p></div></div><div class="code"><div class="wrapper">          <span class="k">when</span> <span class="nx">state_none</span>
+            <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
+              <span class="nx">first_activity</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+              <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_first</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In state<em>find</em>first is used to find end of main activity
+and then it will change state to state<em>find</em>second</p></div></div><div class="code"><div class="wrapper">          <span class="k">when</span> <span class="nx">state_find_first</span>
+            <span class="k">if</span> <span class="nx">first_activity</span> <span class="o">==</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span>
+              <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_second</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In state<em>find</em>second is used to find next activity
+and then it will change state to state<em>find</em>first</p></div></div><div class="code"><div class="wrapper">          <span class="k">when</span> <span class="nx">state_find_second</span>
+            <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
+              <span class="nx">second_activity</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+              <span class="nx">second_map</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use map to collect next activity and
+number of times that happened</p></div></div><div class="code"><div class="wrapper">              <span class="k">if</span> <span class="o">!</span><span class="nx">storage</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">)</span>
+                <span class="nx">second_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
                 <span class="nx">second_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
               <span class="k">else</span>
-                <span class="nx">second_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="nx">second_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="o">!</span><span class="nx">storage</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span>
-              <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">())</span>
-            <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">,</span> <span class="nx">second_map</span><span class="p">)</span>
-            <span class="nx">first_activity</span> <span class="o">=</span> <span class="nx">second_activity</span>
-            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_first</span>
-    <span class="k">return</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span>
-
-  <span class="nv">getAllActivitiesInUnixTime: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="nx">activity_color_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Format in time stack {name: 'Activity Name', color: 'color to visualize', time: 'unix time of activity'}</p></div></div><div class="code"><div class="wrapper">    <span class="nx">time_stack</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="nx">state_none</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="nx">state_on_activity</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
+                <span class="nx">second_map</span> <span class="o">=</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">)</span>
+                <span class="k">if</span> <span class="o">!</span><span class="nx">second_map</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span>
+                  <span class="nx">second_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">else</span>
+                  <span class="nx">second_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="nx">second_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+              <span class="k">if</span> <span class="o">!</span><span class="nx">storage</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">)</span>
+                <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">second_activity</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">())</span>
+              <span class="nx">storage</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">first_activity</span><span class="p">,</span> <span class="nx">second_map</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The next activity is changed to main activity
+to find its next activity</p></div></div><div class="code"><div class="wrapper">              <span class="nx">first_activity</span> <span class="o">=</span> <span class="nx">second_activity</span>
+              <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_find_first</span>
+    <span class="k">return</span> <span class="nx">storage</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get all activities with unixtime format (Each line of data unixtime is different 1 minute).
+Returned object list is contained activity that happened in each minutes
+format {name: activity name, color: unique color associated with activity, time: unixtime that activity happened} in returned object list</p></div></div><div class="code"><div class="wrapper">  <span class="nv">getAllActivitiesInUnixTime: </span><span class="p">()</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This method is based on finite-state machine to compute</p></div></div><div class="code"><div class="wrapper">    <span class="nx">activity_color_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
+    <span class="nx">time_stack</span> <span class="o">=</span> <span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State that nothing happened</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state_none</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>State to inform that activity is happening</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state_on_activity</span> <span class="o">=</span> <span class="mi">0</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>state variable</p></div></div><div class="code"><div class="wrapper">    <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
     <span class="nx">activity_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="nx">activity_color</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="nx">activity_time</span> <span class="o">=</span> <span class="mi">0</span>
@@ -429,83 +271,68 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
     <span class="k">for</span> <span class="nx">d</span> <span class="k">in</span> <span class="err">@</span><span class="nx">_data</span>
       <span class="nx">tmp</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="sr">/[\s]/</span><span class="p">)</span>
       <span class="nx">prefix</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_none</span>
-          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
-            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_on_activity</span>
-            <span class="nx">activity_name</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="k">if</span> <span class="o">!</span><span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span>
-              <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">,</span> <span class="nx">color_id</span><span class="p">)</span>
-              <span class="nx">color_id</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="nx">activity_color</span> <span class="o">=</span> <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span>
-            <span class="nx">activity_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_floorSecondUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-          <span class="k">else</span>
-            <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="nv">color: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="nx">state</span> <span class="o">==</span> <span class="nx">state_on_activity</span>
-          <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="nx">activity_name</span>
-            <span class="nx">current_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_floorSecondUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-            <span class="k">if</span> <span class="nx">current_time</span> <span class="o">-</span> <span class="nx">activity_time</span> <span class="o">&gt;=</span> <span class="mi">60</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Push time in period minute per event</p></div></div><div class="code"><div class="wrapper">              <span class="k">while</span> <span class="nx">activity_time</span> <span class="o">&lt;=</span> <span class="nx">current_time</span>
-                <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span>
-                <span class="nx">activity_time</span> <span class="o">+=</span> <span class="mi">60</span>
-            <span class="k">else</span>
-              <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reset activity and state</p></div></div><div class="code"><div class="wrapper">            <span class="nx">activity_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-            <span class="nx">activity_color</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="nx">activity_time</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
-    <span class="k">return</span> <span class="nx">time_stack</span>
-
-  <span class="nv">_floorSecondUnixTime: </span><span class="p">(</span><span class="nx">unixtime</span><span class="p">)</span><span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="nx">prefix</span> <span class="o">==</span> <span class="mi">0</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In state<em>none is used to find activity
+and then it will change state to state</em>on_activity</p></div></div><div class="code"><div class="wrapper">        <span class="k">switch</span> <span class="nx">state</span>
+          <span class="k">when</span> <span class="nx">state_none</span>
+            <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span>
+              <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_on_activity</span>
+              <span class="nx">activity_name</span> <span class="o">=</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Defined unique color code</p></div></div><div class="code"><div class="wrapper">              <span class="k">if</span> <span class="o">!</span><span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">containsKey</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span>
+                <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">,</span> <span class="nx">color_id</span><span class="p">)</span>
+                <span class="nx">color_id</span> <span class="o">+=</span> <span class="mi">1</span>
+              <span class="nx">activity_color</span> <span class="o">=</span> <span class="nx">activity_color_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">activity_name</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Parse unixtime by floor original unixtime in HH:mm:ss to HH:mm
+Activity_time is a time that activity happened</p></div></div><div class="code"><div class="wrapper">              <span class="nx">activity_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_cutOffSecondFromUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If nothing happened, it push 'none' event to stack</p></div></div><div class="code"><div class="wrapper">            <span class="k">else</span>
+              <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="nv">color: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In state<em>on</em>activity is used to find the end of activity
+and generate data in every minute push them to stack
+and then it will change state to state_none</p></div></div><div class="code"><div class="wrapper">          <span class="k">when</span> <span class="nx">state_on_activity</span>
+            <span class="k">if</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">3</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span> <span class="o">&amp;&amp;</span> <span class="nx">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="nx">activity_name</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Time of the end activity</p></div></div><div class="code"><div class="wrapper">              <span class="nx">current_time</span> <span class="o">=</span> <span class="err">@</span><span class="nx">_cutOffSecondFromUnixTime</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+              <span class="k">if</span> <span class="nx">current_time</span> <span class="o">-</span> <span class="nx">activity_time</span> <span class="o">&gt;=</span> <span class="mi">60</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Push time in every minute per event</p></div></div><div class="code"><div class="wrapper">                <span class="k">while</span> <span class="nx">activity_time</span> <span class="o">&lt;=</span> <span class="nx">current_time</span>
+                  <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span>
+                  <span class="nx">activity_time</span> <span class="o">+=</span> <span class="mi">60</span>
+              <span class="k">else</span>
+                <span class="nx">time_stack</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nv">name: </span><span class="nx">activity_name</span><span class="p">,</span> <span class="nv">color: </span><span class="nx">activity_color</span><span class="p">,</span> <span class="nv">time: </span><span class="nx">activity_time</span><span class="p">})</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reset activity and state</p></div></div><div class="code"><div class="wrapper">              <span class="nx">activity_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+              <span class="nx">activity_color</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="nx">activity_time</span> <span class="o">=</span> <span class="mi">0</span>
+              <span class="nx">state</span> <span class="o">=</span> <span class="nx">state_none</span>
+    <span class="k">return</span> <span class="nx">time_stack</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To floor unixtime by cut off second from unixtime
+HH:mm:ss to HH:mm</p></div></div><div class="code"><div class="wrapper">  <span class="nv">_cutOffSecondFromUnixTime: </span><span class="p">(</span><span class="nx">unixtime</span><span class="p">)</span><span class="o">-&gt;</span>
     <span class="nx">raw</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">unixtime</span><span class="p">)</span>
     <span class="nx">cut_off_second</span> <span class="o">=</span> <span class="nx">raw</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="s2">&quot;YYYY-MM-DD,HH:mm&quot;</span><span class="p">)</span>
     <span class="nx">convert_to_unix</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">cut_off_second</span><span class="p">,</span> <span class="s2">&quot;YYYY-MM-DD,HH:mm&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">convert_to_unix</span><span class="p">.</span><span class="nx">unix</span><span class="p">()</span>
-
-
-<span class="nx">class</span> <span class="nx">VisualizeParser</span>
-  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span>
-
-  <span class="c1">#data must be list of {key: &#39;text&#39;, value: &#39;number&#39;}</span>
-  <span class="nv">parsePieChart: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
-    <span class="nx">path</span> <span class="o">=</span> <span class="s1">&#39;piechart.txt&#39;</span>
+    <span class="k">return</span> <span class="nx">convert_to_unix</span><span class="p">.</span><span class="nx">unix</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="visualization-parser-class">Visualization Parser Class</h2></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Overview</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use to parse data to visualization
+it will parse any data and save to specific file, and when
+it was changed, visualizations on web application are also changed
+in real-time</p></div></div><div class="code"><div class="wrapper"><span class="nx">class</span> <span class="nx">VisualizationParser</span>
+  <span class="nv">constructor: </span><span class="p">()</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Data must be list of {key: activity, value: number of times}</p></div></div><div class="code"><div class="wrapper">  <span class="nv">parsePieChart: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Specific file that associates with pie chart visualization</p></div></div><div class="code"><div class="wrapper">    <span class="nx">path</span> <span class="o">=</span> <span class="s1">&#39;piechart.txt&#39;</span>
     <span class="nx">text</span> <span class="o">=</span> <span class="s1">&#39;name,data&#39;</span>
     <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
       <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">value</span>
-    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span>
-
-
-  <span class="c1">#data must be list Map&lt; activity, Map&lt;next_activity,count&gt; &gt;</span>
-  <span class="nv">parseChordDiagram: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
-    <span class="nx">path_data</span> <span class="o">=</span> <span class="s1">&#39;chorddiagram.csv&#39;</span>
-    <span class="nx">path_matrix</span> <span class="o">=</span> <span class="s1">&#39;matrix.json&#39;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Data must be list of {key: main<em>activity, value: Map(next</em>activity, number of times) }</p></div></div><div class="code"><div class="wrapper">  <span class="nv">parseChordDiagram: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Specific file that associates with chord diagram visualization
+for major data (name,color)</p></div></div><div class="code"><div class="wrapper">    <span class="nx">path_data</span> <span class="o">=</span> <span class="s1">&#39;chorddiagram.csv&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Specific file that associates with chord diagram visualization
+for minor data (matrix of visualizing size of each data)</p></div></div><div class="code"><div class="wrapper">    <span class="nx">path_matrix</span> <span class="o">=</span> <span class="s1">&#39;matrix.json&#39;</span>
     <span class="nx">data_text</span> <span class="o">=</span> <span class="s1">&#39;name,color&#39;</span>
     <span class="nx">data_matrix</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nx">matrix_map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
     <span class="nx">unique_index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="nx">color_code</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
-      <span class="nx">data_text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">color_code</span>
-      <span class="c1">##for making matrix</span>
-      <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">unique_index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Color is associated with data</p></div></div><div class="code"><div class="wrapper">      <span class="nx">data_text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">key</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">color_code</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>For making matrix</p></div></div><div class="code"><div class="wrapper">      <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">key</span><span class="p">,</span> <span class="nx">unique_index</span><span class="p">)</span>
       <span class="nx">data_matrix</span><span class="p">.</span><span class="nx">push</span><span class="p">([])</span>
       <span class="nx">unique_index</span> <span class="o">+=</span> <span class="mi">1</span>
-      <span class="nx">color_code</span> <span class="o">+=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>generate matrix</p></div></div><div class="code"><div class="wrapper">    <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="nx">color_code</span> <span class="o">+=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate matrix</p></div></div><div class="code"><div class="wrapper">    <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">unique_index</span>
       <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span>
       <span class="k">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">unique_index</span>
         <span class="nx">data_matrix</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="nx">j</span> <span class="o">+=</span> <span class="mi">1</span>
       <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>determine value in matrix</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Determine value in matrix</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
       <span class="nx">val_list</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nx">toObjectList</span><span class="p">()</span>
       <span class="k">for</span> <span class="nx">d</span> <span class="k">in</span> <span class="nx">val_list</span>
         <span class="nx">index_val</span> <span class="o">=</span> <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
         <span class="nx">index_key</span> <span class="o">=</span> <span class="nx">matrix_map</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">key</span><span class="p">)</span>
         <span class="nx">data_matrix</span><span class="p">[</span><span class="nx">index_key</span><span class="p">][</span><span class="nx">index_val</span><span class="p">]</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span>
     <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path_data</span><span class="p">,</span> <span class="nx">data_text</span><span class="p">)</span>
-    <span class="c1">#fs.writeFileSync(&#39;./public/&#39; + path_matrix, JSON.stringify(data_matrix))</span>
-  
-  <span class="nv">parseTimeLineMatrix: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span>
-    <span class="nx">path</span> <span class="o">=</span> <span class="s1">&#39;timeline.csv&#39;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span><span class="p">(</span><span class="s1">&#39;./public/&#39;</span> <span class="o">+</span> <span class="nx">path_matrix</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data_matrix</span><span class="p">))</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Data must be list of {name: activity name, color: unique color associated with activity, time: unixtime that activity happened}</p></div></div><div class="code"><div class="wrapper">  <span class="nv">parseTimeLineMatrix: </span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Specific file that associates with timeline visualization</p></div></div><div class="code"><div class="wrapper">    <span class="nx">path</span> <span class="o">=</span> <span class="s1">&#39;timeline.csv&#39;</span>
     <span class="nx">text</span> <span class="o">=</span> <span class="s1">&#39;name,color,time&#39;</span>
     <span class="k">for</span> <span class="nx">obj</span> <span class="k">in</span> <span class="nx">data</span>
       <span class="nx">text</span> <span class="o">+=</span> <span class="s1">&#39;\r\n&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">color</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">time</span>
@@ -513,13 +340,16 @@ all read file must be in ./public/</p></div></div><div class="code"><div class="
 
 <span class="nx">Meteor</span><span class="p">.</span><span class="nx">methods</span><span class="p">({</span>
   <span class="nv">print: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="nx">sd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SensorDictionary</span><span class="p">(</span><span class="s2">&quot;all-pos.txt&quot;</span><span class="p">)</span>
-    <span class="nx">c</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConvertorTimelineFormat</span><span class="p">(</span><span class="s1">&#39;raw-data-sh.txt&#39;</span><span class="p">,</span><span class="nx">sd</span><span class="p">)</span>
-    <span class="nx">filter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataFilter</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">getData</span><span class="p">())</span>
-    <span class="c1">#data_dia = filter.getAllActivitiesInSequencePair()</span>
-    <span class="nx">vp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VisualizeParser</span><span class="p">()</span>
-    <span class="c1">#x = vp.parseChordDiagram(data_dia)</span>
-    <span class="nx">data_timeline</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">getAllActivitiesInUnixTime</span><span class="p">()</span>
-    <span class="nx">vp</span><span class="p">.</span><span class="nx">parseTimeLineMatrix</span><span class="p">(</span><span class="nx">data_timeline</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">data_timeline</span>
+    <span class="c1">#sd = new SensorDictionary(&quot;all-pos.txt&quot;)</span>
+    <span class="c1">#c = new ConvertorTimelineFormat(&#39;raw-data-sh.txt&#39;,sd)</span>
+    <span class="c1">#processor = new DataProcessor(c.getData())</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>data_dia = processor.getAllActivitiesInSequencePair()</p></div></div><div class="code"><div class="wrapper">    <span class="c1">#vp = new VisualizationParser()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>x = vp.parseChordDiagram(data_dia)</p></div></div><div class="code"><div class="wrapper">    <span class="c1">#data_timeline = processor.getAllActivitiesInUnixTime()</span>
+    <span class="c1">#vp.parseTimeLineMatrix(data_timeline)</span>
+    <span class="c1">#return data_timeline</span>
+
+  <span class="nv">getAllUploadedFilesName: </span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="k">return</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="s1">&#39;./public/uploaded-files~&#39;</span><span class="p">)</span>
+
+  <span class="nv">deleteFile: </span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">unlinkSync</span><span class="p">(</span><span class="s1">&#39;./public/uploaded-files~/&#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">true</span>
 <span class="p">})</span></div></div></div></div></body></html>
