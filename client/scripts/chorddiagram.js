@@ -19,7 +19,7 @@ Template.chorddiagram.rendered = function() {
     // Generate Color
     var colors = d3.scale.category20();
     // Load up two files.
-    d3.csv("chorddiagram.csv", function(cities) {
+    d3.csv("chorddiagram.csv", function(v_data) {
         d3.json("matrix.json", function(matrix) {
             // Compute the chord layout.
             layout.matrix(matrix);
@@ -27,20 +27,20 @@ Template.chorddiagram.rendered = function() {
             var group = svg.selectAll(".group").data(layout.groups).enter().append("g").attr("class", "group").on("mouseover", mouseover);
             // Add a mouseover title.
             group.append("title").text(function(d, i) {
-                return cities[i].name + ": " + d.value + " of origins";
+                return v_data[i].name + ": " + d.value + " of origins";
             });
             // Add the group arc.
             var groupPath = group.append("path").attr("id", function(d, i) {
                 return "group" + i;
             }).attr("d", arc).style("fill", function(d, i) {
-                return colors(cities[i].color);
+                return colors(v_data[i].color);
             });
             // Add a text label.
             var groupText = group.append("text").attr("x", 6).attr("dy", 15);
             groupText.append("textPath").attr("xlink:href", function(d, i) {
                 return "#group" + i;
             }).text(function(d, i) {
-                return cities[i].name;
+                return v_data[i].name;
             });
             // Remove the labels that don't fit. :(
             groupText.filter(function(d, i) {
@@ -48,11 +48,11 @@ Template.chorddiagram.rendered = function() {
             }).remove();
             // Add the chords.
             var chord = svg.selectAll(".chord").data(layout.chords).enter().append("path").attr("class", "chord").style("fill", function(d) {
-                return colors(cities[d.source.index].color);
+                return colors(v_data[d.source.index].color);
             }).attr("d", path);
             // Add an elaborate mouseover title for each chord.
             chord.append("title").text(function(d) {
-                return cities[d.source.index].name + " → " + cities[d.target.index].name + ": " + d.source.value + "\n" + cities[d.target.index].name + " → " + cities[d.source.index].name + ": " + d.target.value;
+                return v_data[d.source.index].name + " → " + v_data[d.target.index].name + ": " + d.source.value + "\n" + v_data[d.target.index].name + " → " + v_data[d.source.index].name + ": " + d.target.value;
             });
 
             function mouseover(d, i) {
