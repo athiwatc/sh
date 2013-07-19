@@ -2,4 +2,7 @@
   <span class="nx">SensorData</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">file: </span><span class="nx">file</span><span class="p">})</span>
 
 <span class="nx">Meteor</span><span class="p">.</span><span class="nx">publish</span> <span class="s1">&#39;sensorposition&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">file</span><span class="p">)</span> <span class="o">-&gt;</span>
-  <span class="nx">SensorPosition</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">file: </span><span class="nx">file</span><span class="p">})</span></div></div></div></div></body></html>
+  <span class="nx">SensorPosition</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">file: </span><span class="nx">file</span><span class="p">})</span>
+
+<span class="nx">Meteor</span><span class="p">.</span><span class="nx">publish</span> <span class="kc">null</span><span class="p">,</span> <span class="p">()</span> <span class="o">-&gt;</span>
+  <span class="nx">FilesName</span><span class="p">.</span><span class="nx">find</span><span class="p">({})</span></div></div></div></div></body></html>

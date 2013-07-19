@@ -346,10 +346,16 @@ for minor data (matrix of visualizing size of each data)</p></div></div><div cla
     <span class="c1">#vp.parseTimeLineMatrix(data_timeline)</span>
     <span class="c1">#return data_timeline</span>
 
-  <span class="nv">getAllUploadedFilesName: </span><span class="p">()</span><span class="o">-&gt;</span>
-    <span class="k">return</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="s1">&#39;./public/uploaded-files~&#39;</span><span class="p">)</span>
-
-  <span class="nv">deleteFile: </span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="o">-&gt;</span>
+  <span class="nv">deleteFile: </span><span class="p">(</span><span class="nx">file_id</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="nx">FilesName</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">_id: </span><span class="nx">file_id</span><span class="p">}).</span><span class="nx">filename</span>
+    <span class="nx">FilesName</span><span class="p">.</span><span class="nx">remove</span><span class="p">({</span><span class="nv">_id: </span><span class="nx">file_id</span><span class="p">})</span>
     <span class="nx">fs</span><span class="p">.</span><span class="nx">unlinkSync</span><span class="p">(</span><span class="s1">&#39;./public/uploaded-files~/&#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">true</span>
+
+  <span class="nv">getFileData: </span><span class="p">(</span><span class="nx">file_id</span><span class="p">)</span><span class="o">-&gt;</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="nx">FilesName</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span><span class="nv">_id: </span><span class="nx">file_id</span><span class="p">}).</span><span class="nx">filename</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="s1">&#39;./public/uploaded-files~/&#39;</span> <span class="o">+</span> <span class="nx">name</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+
+    
 <span class="p">})</span></div></div></div></div></body></html>

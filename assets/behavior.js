@@ -111,22 +111,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "singleLineComment": ["#"],
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/scripts/home.coffee",
-                "projectPath": "client/scripts/home.coffee",
-                "targetPath": "client/scripts/home",
-                "title": "home"
-              },
-              "depth": 3,
-              "outline": []
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
                   "nameMatchers": [".js"],
                   "pygmentsLexer": "javascript",
                   "singleLineComment": ["//"],
@@ -138,7 +122,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "title": "piechart"
               },
               "depth": 3,
-              "outline": []
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Render Pie Chart",
+                    "slug": "render-pie-chart"
+                  },
+                  "depth": 2
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -512,6 +506,22 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "projectPath": "server/publish.coffee",
             "targetPath": "server/publish",
             "title": "publish"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
+            },
+            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/server/upload.js",
+            "projectPath": "server/upload.js",
+            "targetPath": "server/upload",
+            "title": "upload"
           },
           "depth": 2,
           "outline": []
