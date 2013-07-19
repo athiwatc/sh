@@ -20,10 +20,12 @@ Template.upload.events({
 				console.log 'ERROR: Delete file ' + file_id
 		)
 
-	'click .view': ()->
-		f = this.getAttribute('file')
-		###Meteor.call('getFileData',f, (err,result)->
-			$('#view-header').html('View Data From: '+ f)
+	'click .view': (event)->
+		console.log event.target
+		file_id = event.target.getAttribute('data-file')
+		Meteor.call('getFileData',file_id, (err,result)->
+			name = FilesName.find({_id: file_id}).filename
+			$('#view-header').html('View Data From: '+ name)
 			$('#info-view').html(result)
-		)###
+		)
 })
