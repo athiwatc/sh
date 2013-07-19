@@ -620,5 +620,8 @@ Meteor.methods({
 	deleteFile: (name)->
 		fs.unlinkSync('./public/uploaded-files~/' + name)
 		return true
+
+	uploadFile: ()->
+		
 })
 

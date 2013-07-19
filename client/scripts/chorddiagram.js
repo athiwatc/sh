@@ -55,6 +55,7 @@ Template.chorddiagram.rendered = function() {
                 return v_data[d.source.index].name + " → " + v_data[d.target.index].name + ": " + d.source.value + "\n" + v_data[d.target.index].name + " → " + v_data[d.source.index].name + ": " + d.target.value;
             });
 
+            // This is the function that tracks the user mouse.
             function mouseover(d, i) {
                 chord.classed("fade", function(p) {
                     return p.source.index != i && p.target.index != i;

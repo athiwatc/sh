@@ -7,18 +7,24 @@
   "dependencies": {
     "basePackages": {
       "router": {},
-      "moment": {}
+      "moment": {},
+      "meteor-file": {}
     },
     "packages": {
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.5.1",
-        "commit": "32e377c7703bb119acccc859fc7296882903cbe7"
+        "tag": "v0.5.3",
+        "commit": "7bd3a1bdd1099625bb8b49406d9b8f961d6f4a17"
       },
       "moment": {
         "git": "https://github.com/possibilities/meteor-moment.git",
         "tag": "v1.7.0",
         "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
+      },
+      "meteor-file": {
+        "git": "https://github.com/EventedMind/meteor-file.git",
+        "tag": "v0.0.6",
+        "commit": "b8824eb42d51276ac4c8bc0aa5ca55b6f0872c5e"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",

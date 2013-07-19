@@ -1,3 +1,4 @@
+// ## Render Pie Chart
 Template.piechart.rendered = function() {
     // Load up file
     d3.csv('piechart.txt', function(pie_data) {

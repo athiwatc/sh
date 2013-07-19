@@ -5,6 +5,7 @@
   },
   "packages": {
     "router": {},
-    "moment": {}
+    "moment": {},
+    "meteor-file": {}
   }
 }

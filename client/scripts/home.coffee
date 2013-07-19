@@ -1,7 +1,1 @@
-Template.home.rendered = ()->
-	Meteor.call('print', (err,result)->
-		console.log 'TEST'
-		console.log result
-	)
-
-
+# ## Render the home template. There's nothing here currently.

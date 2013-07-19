@@ -24,9 +24,13 @@ Template.coor.events {
 
 # Add data to the form.
 @addSensorForm = (x,y)->
+	# Ask the user for the name of the point.
 	p = window.prompt("Input a name for the point","NoName");
+	# Check if the user input any data or not.
 	if (p!=null && p!="")
+		# Set the counter data...
 		counter = $('#data_div').attr("counter")
+		# Adding them so the user can see it.
 		added = "<div id='sensor#{counter}'>Sensor name = <input type='text' name='sensor' value='#{p}' size='10'/> x = <input type='text' name='form_x' size='4' value='#{x}'/>, y = <input type='text' name='form_y' size='4' value='#{y}'/>"
 		deleted = " <button type='button' class='btn btn-primary' id='remove#{counter}'>Remove</button> </br></div>"
 		$("#data_div").append(added + deleted)
