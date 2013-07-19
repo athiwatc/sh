@@ -614,14 +614,17 @@ Meteor.methods({
 		#vp.parseTimeLineMatrix(data_timeline)
 		#return data_timeline
 
-	getAllUploadedFilesName: ()->
-		return fs.readdirSync('./public/uploaded-files~')
-
-	deleteFile: (name)->
+	deleteFile: (file_id)->
+		name = FilesName.find({_id: file_id}).filename
+		FilesName.remove({_id: file_id})
 		fs.unlinkSync('./public/uploaded-files~/' + name)
 		return true
 
-	uploadFile: ()->
+	getFileData: (file_id)->
+		name = FilesName.find({_id: file_id}).filename
+		data = fs.readFileSync('./public/uploaded-files~/' + name, 'utf8')
+		return data.toString()
+
 		
 })
 

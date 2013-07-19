@@ -1,5 +1,15 @@
 <template name="upload">
 	<input type="file" id="files" name="files" />
 	<button type="button" id="uploadButton">Upload</button>
-	<div id="files-list"> </div>
+	{{#each files}}
+	<div id='file_{{_id}}_div' >
+		<h2>{{filename}}</h2> 
+		<button class='view' type='button' data-file={{_id}}>View</button> 
+		<button class='deleted' type='button' data-file={{_id}}>Delete</button>
+	</div>
+	{{/each}}
+	<label id="view-header">View Data From: - </label>
+	<textarea id="info-view" rows="25" cols="50">
+		viewer
+	</textarea> 
 </template>

@@ -1,1 +1,0 @@
-# ## Render the home template. There's nothing here currently.
