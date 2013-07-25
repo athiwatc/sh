@@ -1,3 +1,0 @@
-(function(){ Meteor._def_template("upload",Handlebars.json_ast_to_func(["<input type=\"file\" id=\"files\" name=\"files\" />\n\t<button type=\"button\" id=\"uploadButton\">Upload</button>\n\t",["#",[[0,"each"],[0,"files"]],["\n\t<div id='file_",["{",[[0,"_id"]]],"_div' >\n\t\t<h2>",["{",[[0,"filename"]]],"</h2> \n\t\t<button class='view' type='button' data-file=",["{",[[0,"_id"]]],">View</button> \n\t\t<button class='deleted' type='button' data-file=",["{",[[0,"_id"]]],">Delete</button>\n\t</div>\n\t"]],"\n\t<label id=\"view-header\">View Data From: - </label>\n\t<textarea id=\"info-view\" rows=\"25\" cols=\"50\">\n\t\tviewer\n\t</textarea>"]));
-
-}).call(this);

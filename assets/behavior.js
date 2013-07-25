@@ -111,6 +111,56 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "file",
               "data": {
                 "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "singleLineComment": ["#"],
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/scripts/home.coffee",
+                "projectPath": "client/scripts/home.coffee",
+                "targetPath": "client/scripts/home",
+                "title": "home"
+              },
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Normal Template rendered",
+                    "slug": "normal-template-rendered"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Events handler",
+                    "slug": "events-handler"
+                  },
+                  "depth": 2
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".js"],
+                  "pygmentsLexer": "javascript",
+                  "singleLineComment": ["//"],
+                  "name": "JavaScript"
+                },
+                "sourcePath": "/Users/athiwat/Dropbox/SH/sh/client/scripts/navbar.js",
+                "projectPath": "client/scripts/navbar.js",
+                "targetPath": "client/scripts/navbar",
+                "title": "navbar"
+              },
+              "depth": 3,
+              "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
                   "nameMatchers": [".js"],
                   "pygmentsLexer": "javascript",
                   "singleLineComment": ["//"],
@@ -174,7 +224,25 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "title": "upload"
               },
               "depth": 3,
-              "outline": []
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Template data section",
+                    "slug": "template-data-section"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Events Handler",
+                    "slug": "events-handler"
+                  },
+                  "depth": 2
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -407,6 +475,22 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
+            },
+            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/server/CoorInsert.js",
+            "projectPath": "server/CoorInsert.js",
+            "targetPath": "server/CoorInsert",
+            "title": "CoorInsert"
+          },
+          "depth": 2,
+          "outline": []
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
               "nameMatchers": [".coffee", "Cakefile"],
               "pygmentsLexer": "coffee-script",
               "singleLineComment": ["#"],
@@ -475,6 +559,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "slug": "visualization-parser-class"
               },
               "depth": 2
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 2,
+                "title": "Data Files Output",
+                "slug": "data-files-output"
+              },
+              "depth": 2
             }
           ]
         }, {
@@ -497,13 +589,13 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "file",
           "data": {
             "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "singleLineComment": ["#"],
-              "name": "CoffeeScript"
+              "nameMatchers": [".js"],
+              "pygmentsLexer": "javascript",
+              "singleLineComment": ["//"],
+              "name": "JavaScript"
             },
-            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/server/publish.coffee",
-            "projectPath": "server/publish.coffee",
+            "sourcePath": "/Users/athiwat/Dropbox/SH/sh/server/publish.js",
+            "projectPath": "server/publish.js",
             "targetPath": "server/publish",
             "title": "publish"
           },
