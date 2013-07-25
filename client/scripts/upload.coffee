@@ -1,3 +1,4 @@
+# ## Template data section
 Template.upload.data_files = () ->
   FilesName.find({})
 
@@ -6,6 +7,7 @@ Template.upload.pos_files = () ->
 
 Template.upload.rendered = ()->
 
+# ## Events Handler
 Template.upload.events({
   'click #browse-file': ()->
     $("#files").trigger('click');
@@ -14,20 +16,25 @@ Template.upload.events({
     $("#files_position").trigger('click');
 
   'click #uploadButton': () ->
+    # Calling upload services
     MeteorFile.upload($('#files')[0].files[0], 'uploadData', {}, (err, data) ->
       if err
+        # Error
         alert 'Cannot upload file: ' + err.reason
     );
         
   'click #uploadButtonPosition': () ->
+    # Calling upload services
     MeteorFile.upload($('#files_position')[0].files[0], 'uploadPosition', {}, (err, data) ->
       if err
         alert 'Cannot upload file: ' + err.reason
     );
 
   'click .deleted': (event)->
+    # Delete the files
     file_id = $(event.target).attr('data-file')
     file_type = $(event.target).attr('data-type')
+    # Call delete file event
     Meteor.call('deleteFile',file_id,file_type, (err,result)->
       if file_type == 'data' && Session.equals("rendered-filename", name)
         Session.set("rendered-filename", null)
@@ -37,6 +44,7 @@ Template.upload.events({
       $('#' + div_name).remove()
     )
 
+  # View the content of the files
   'click .view': (event)->
     file_id = $(event.target).attr('data-file')
     file_type = $(event.target).attr('data-type')

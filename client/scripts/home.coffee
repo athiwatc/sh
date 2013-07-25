@@ -1,3 +1,4 @@
+# ## Normal Template rendered
 Template.home.rendered = ()->
 	file_name = "NONE"
 	pos_name = "NONE"
@@ -17,8 +18,9 @@ Template.home.data_files = () ->
 Template.home.pos_files = () ->
 	PosFilesName.find({})
 
-
+# ## Events handler
 Template.home.events({
+	# File selection handler
 	'click #render-file': () ->
 		file_name = $('select#render-list option:selected').val()
 		pos_name = $('select#pos-list option:selected').val()
