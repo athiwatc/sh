@@ -6,6 +6,7 @@
   "packages": {
     "router": {},
     "moment": {},
-    "meteor-file": {}
+    "meteor-file": {},
+    "collectionFS": {}
   }
 }

@@ -1,5 +1,4 @@
 this.fs = Npm.require('fs')
-
 # ## Sensor Dictionary Class
 
 # Overview
@@ -16,7 +15,7 @@ class SensorDictionary
 	_init: (path)->
 		# Read file from specific path, actually path is a file name because
 		# all read file must be in ./public/
-		data = fs.readFileSync('./public/' + path, 'utf8')
+		data = fs.readFileSync('./public/uploaded-files~/position-files/' + path, 'utf8')
 		lines = data.toString().split('\r\n')
 		for l in lines
 			if l[0] != '#'
@@ -384,6 +383,15 @@ class DataProcessor
 	setData: (data)->
 		@_data = data
 
+	# Get begin time of file and end time of file
+	# format {begin: time, end: time}
+	getTimePeriod:()->
+		tmp = @_data[0].trim().split(/[\s]/)
+		begin_time = parseInt(tmp[1])
+		tmp = @_data[@_data.length - 1].trim().split(/[\s]/)
+		end_time = parseInt(tmp[1])
+		return {begin: begin_time, end: end_time}
+
 	# Get all activities and number of times from input data
 	# format {key: activity, value: number of times} in returned object list
 	getAllActivities: ()->
@@ -510,11 +518,11 @@ class DataProcessor
 						if tmp[3].toLowerCase() == 'end' && tmp[2] == activity_name
 							# Time of the end activity
 							current_time = @_cutOffSecondFromUnixTime(parseInt(tmp[1]))
-							if current_time - activity_time >= 60
+							if current_time - activity_time >= 60000
 								# Push time in every minute per event
 								while activity_time <= current_time
 									time_stack.push({name: activity_name, color: activity_color, time: activity_time})
-									activity_time += 60
+									activity_time += 60000
 							else
 								time_stack.push({name: activity_name, color: activity_color, time: activity_time})
 							# Reset activity and state
@@ -527,41 +535,34 @@ class DataProcessor
 	# To floor unixtime by cut off second from unixtime
 	# HH:mm:ss to HH:mm
 	_cutOffSecondFromUnixTime: (unixtime)->
-		raw = moment(unixtime)
-		cut_off_second = raw.format("YYYY-MM-DD,HH:mm")
-		convert_to_unix = moment(cut_off_second, "YYYY-MM-DD,HH:mm")
-		return convert_to_unix.unix()
+		cut_off_second = moment(unixtime).format("YYYY-MM-DD,HH:mm")
+		convert_to_unix = +moment(cut_off_second, "YYYY-MM-DD,HH:mm")
+		return convert_to_unix
 
 # ## Visualization Parser Class
 
 # Overview
 
-# Use to parse data to visualization
-# it will parse any data and save to specific file, and when
-# it was changed, visualizations on web application are also changed
-# in real-time
+# Use to parse data for preparation to be visualized by client side
+# it will parse any data and write to file in specific folder.
+# The data in file is ready to get rendered by visualize function
+# in client side
 class VisualizationParser
 	constructor: ()->
 
 	# Data must be list of {key: activity, value: number of times}
 	parsePieChart: (data)->
-		# Specific file that associates with pie chart visualization
-		path = 'piechart.txt'
 		text = 'name,data'
 		for obj in data
 			text += '\r\n' + obj.key + ',' + obj.value
-		fs.writeFileSync('./public/' + path, text)
+		return text
 
 
 	# Data must be list of {key: main_activity, value: Map(next_activity, number of times) }
-	parseChordDiagram: (data)->
-		# Specific file that associates with chord diagram visualization
+	parseChordDiagram: (data, filename)->
 		# for major data (name,color)
-		path_data = 'chorddiagram.csv'
-		# Specific file that associates with chord diagram visualization
-		# for minor data (matrix of visualizing size of each data)
-		path_matrix = 'matrix.json'
 		data_text = 'name,color'
+		# for minor data (matrix of visualizing size of each data)
 		data_matrix = []
 		matrix_map = new Map()
 		unique_index = 0
@@ -590,41 +591,120 @@ class VisualizationParser
 				index_val = matrix_map.get(d.key)
 				index_key = matrix_map.get(obj.key)
 				data_matrix[index_key][index_val] = d.value
-		fs.writeFileSync('./public/' + path_data, data_text)
-		fs.writeFileSync('./public/' + path_matrix, JSON.stringify(data_matrix))
+		return {info: data_text, matrix: JSON.stringify(data_matrix)}
 	
 	# Data must be list of {name: activity name, color: unique color associated with activity, time: unixtime that activity happened}
 	parseTimeLineMatrix: (data)->
-		# Specific file that associates with timeline visualization
-		path = 'timeline.csv'
 		text = 'name,color,time'
 		for obj in data
 			text += '\r\n' + obj.name + ',' + obj.color + ',' + obj.time
-		fs.writeFileSync('./public/' + path, text)
+		return text
 
 Meteor.methods({
-	print: ()->
-		#sd = new SensorDictionary("all-pos.txt")
-		#c = new ConvertorTimelineFormat('raw-data-sh.txt',sd)
-		#processor = new DataProcessor(c.getData())
-		# data_dia = processor.getAllActivitiesInSequencePair()
-		#vp = new VisualizationParser()
-		# x = vp.parseChordDiagram(data_dia)
-		#data_timeline = processor.getAllActivitiesInUnixTime()
-		#vp.parseTimeLineMatrix(data_timeline)
-		#return data_timeline
+	# Upload method
+	uploadData: (data)->
+		'use strict'
+		if FilesName.findOne({filename: data.name}) == undefined
+			data.save('public/uploaded-files~/')
+			filename = data.name
+			# Insert into the database.
+			FilesName.insert({filename: filename})
+			#FilesName.remove({filename: 'XXX'}) // to remove
+		else
+			throw new Meteor.Error(413, "Duplicated file name");
+	
+	# Upload method
+	uploadPosition: (data)->
+		'use strict'
+		if PosFilesName.findOne({filename: data.name}) == undefined
+			data.save('public/uploaded-files~/position-files/')
+			filename = data.name
+			# Insert into the database.
+			PosFilesName.insert({filename: filename})
+			#FilesName.remove({filename: 'XXX'}) // to remove
+		else
+			throw new Meteor.Error(413, "Duplicated file name")
 
-	deleteFile: (file_id)->
-		name = FilesName.find({_id: file_id}).filename
-		FilesName.remove({_id: file_id})
-		fs.unlinkSync('./public/uploaded-files~/' + name)
+	deleteFile: (file_id, file_type)->
+		if file_type == 'pos'
+			file = PosFilesName.findOne({_id: file_id})
+			name = file.filename
+			PosFilesName.remove({_id: file_id})
+			fs.unlinkSync('./public/uploaded-files~/position-files/' + name)
+		else if file_type == 'data'
+			file = FilesName.findOne({_id: file_id})
+			name = file.filename
+			FilesName.remove({_id: file_id})
+			fs.unlinkSync('./public/uploaded-files~/' + name)
 		return true
 
-	getFileData: (file_id)->
-		name = FilesName.find({_id: file_id}).filename
-		data = fs.readFileSync('./public/uploaded-files~/' + name, 'utf8')
+	getFileData: (file_id,file_type)->
+		data = ''
+		if file_type == 'pos'
+			file = PosFilesName.findOne({_id: file_id})
+			name = file.filename
+			data = fs.readFileSync('./public/uploaded-files~/position-files/' + name, 'utf8')
+		else if file_type == 'data'
+			file = FilesName.findOne({_id: file_id})
+			name = file.filename
+			data = fs.readFileSync('./public/uploaded-files~/' + name, 'utf8')
 		return data.toString()
 
-		
+	getTimePeriod: (datafile_name, posfile_name)->
+		sd = new SensorDictionary(posfile_name)
+		c = new ConvertorTimelineFormat('uploaded-files~/' + datafile_name, sd)
+		processor = new DataProcessor(c.getData())
+		return processor.getTimePeriod()
 })
 
+_getConvertorTimeLineFormat = (data_file, position_file)->
+	# Selected sensor position file
+	sd = new SensorDictionary(position_file)
+	c = new ConvertorTimelineFormat('uploaded-files~/' + data_file, sd)
+	return c
+
+# ## Data Files Output
+# This is where we output the data files!
+Meteor.Router.add('/data/piechart/datafile=:data_filename&&posfile=:pos_filename', (data_filename, pos_filename) ->
+	position_file = pos_filename
+	convertor = _getConvertorTimeLineFormat(data_filename, position_file)
+	processor = new DataProcessor(convertor.getData())
+	vp = new VisualizationParser()
+	data_piechart = processor.getAllActivities()
+	result = vp.parsePieChart(data_piechart)
+	return result
+
+)
+
+Meteor.Router.add('/data/timeline/datafile=:data_filename&&posfile=:pos_filename', (data_filename, pos_filename) ->
+	position_file = pos_filename
+	convertor = _getConvertorTimeLineFormat(data_filename, position_file)
+	processor = new DataProcessor(convertor.getData())
+	vp = new VisualizationParser()
+	data_timeline = processor.getAllActivitiesInUnixTime()
+	result = vp.parseTimeLineMatrix(data_timeline)
+	return result
+)
+
+Meteor.Router.add('/data/chorddiagram/info/datafile=:data_filename&&posfile=:pos_filename', (data_filename, pos_filename) ->
+	position_file = pos_filename
+	convertor = _getConvertorTimeLineFormat(data_filename, position_file)
+	processor = new DataProcessor(convertor.getData())
+	vp = new VisualizationParser()
+	data_chorddiagram = processor.getAllActivitiesInSequencePair()
+	result = vp.parseChordDiagram(data_chorddiagram)
+	return result.info
+)
+
+Meteor.Router.add('/data/chorddiagram/matrix/datafile=:data_filename&&posfile=:pos_filename', (data_filename, pos_filename) ->
+	position_file = pos_filename
+	convertor = _getConvertorTimeLineFormat(data_filename, position_file)
+	processor = new DataProcessor(convertor.getData())
+	vp = new VisualizationParser()
+	data_chorddiagram = processor.getAllActivitiesInSequencePair()
+	result = vp.parseChordDiagram(data_chorddiagram)
+	return result.matrix
+)
+
+@SensorDictionary = SensorDictionary
+@ConvertorTimelineFormat = ConvertorTimelineFormat

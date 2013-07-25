@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<FileZilla3>
+    <Layout Builddate="2013-06-27" Buildtime="22:09:32">
+        <Resources>
+            <xrc file="dialogs.xrc" date="1372180260" />
+            <xrc file="menus.xrc" date="1351049406" />
+            <xrc file="netconfwizard.xrc" date="1218679220" />
+            <xrc file="quickconnectbar.xrc" date="1354426206" />
+            <xrc file="settings.xrc" date="1367379002" />
+            <xrc file="toolbar.xrc" date="1354426206" />
+        </Resources>
+        <Language id="th_TH" date="1372363954">
+            <Font font="0;-11;0;0;0;400;0;0;0;222;0;0;0;0;MS Shell Dlg 2" width="622" height="13" />
+        </Language>
+    </Layout>
+</FileZilla3>

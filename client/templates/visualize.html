@@ -1,11 +1,16 @@
 <template name="visualize">
+	<div class="content visualize">
+    <h1> Sensor Simulation </h1>
+    <div class="line-separator"></div></br> 
     <canvas id="canvas" width="10000" height="10000" style="border:1px solid #000000; padding-left: 0; padding-right: 0; margin-left: auto; margin-right: auto; display: block;"></canvas>
+    <br>
     <button class="start btn btn-success">Start</button>
     <button class="stop btn btn-danger" disabled>Stop</button>
-    <button class="reset btn btn-primary">Reset</button>
-    Current time: <input id="currentTime" value="Wed, 27 Feb 2008 11:43:27 GMT"/>
-    Run per second <input id="speed" value="60"/>
+    <button class="reset btn btn-primary">Reset</button></br><br>
+    Current time: <input id="currentTime" value="Wed, 27 Feb 2008 11:43:27 GMT"/></br><br>
+    Run per second <input id="speed" value="60"/></br><br>
     Time to keep <input id="keep" value="60"/>  seconds(s) (or max of 60 objects)
     <br>
-    Load: <input id="file" value="sample"/> <button id="loadButton" class="red ladda-button contract"><span class="ladda-label">Submit</span><span class="ladda-spinner"></span></button>
+    <!--Load: <input id="file" value="sample"/> <button id="loadButton" class="red ladda-button contract"><span class="ladda-label">Submit</span><span class="ladda-spinner"></span></button>-->
+</div>
 </template>

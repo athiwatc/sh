@@ -1,9 +1,12 @@
 <head>
-  <title>sh</title>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+	<title>sh</title>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 
 <body>
-  {{> navbar}}
-  {{#isolate}} {{renderPage}} {{/isolate}}
+	<div class="row">
+        {{#isolate}} {{renderPage}} {{/isolate}}
+    	{{> navbar}}
+    </div>
 </body>

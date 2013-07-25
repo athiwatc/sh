@@ -1,5 +1,8 @@
 <template name="coor">
-	<input id="filecoor" /> <button id="loadcoor" class="btn btn-primary">Load image</button>
+	<div class="content picker">
+	<h1> Coordinate Picker </h1>
+	<div class="line-separator"></div></br>	
+	<input id="filecoor" placeholder="Map URL"/> <button id="loadcoor" class="btn btn-primary">Load image</button>
 	<form id="pointform" method="post">
 			<div id="pointer_div" onclick="pointIt(event)" style = "width: auto; height: auto;">
 				<img src="" id="picture"/>
@@ -7,12 +10,10 @@
 			</div>
 
 			<div id="data_div" counter="0">
-				<h2>--Sensor Position--<h2>
+				<h3>-- Sensor Position --<h3>
 			</div>
-
+		Filename: <input id="filename" placeholder="Position file name for saving">
 		<button class="btn btn-primary" id="copyoutput">Generate result</button>
 		</form> 
-		----<br>
-		<textarea id="output"></textarea>
-		<br>----
+	</div>
 </template>

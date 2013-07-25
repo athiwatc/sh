@@ -1,2 +1,50 @@
 <template name="home">
+	<div class="content home">
+		<h1> User Guide </h1>
+		<div class="line-separator"></div></br>
+		
+		<p>
+		'Total Activities' is the total number of acitivity in the data set, show in pie chart form.
+		</p>
+		<p>
+		'Activities Sequence' shows the flow of activity from one to the other, in chord diagram form.
+		</p>
+		<p>
+		'Activities Timeline' shows what activity happens at the time, in form of canvas's block.
+		</p>
+		<p>
+		'Sensor Simulation' shows the sensor activities in each time, this page requires Map URL
+		</p>
+		<p>
+		'Coordinate Picker' generate coordinate from a given picture to use with the visualization. In addition, it will save to our database.
+		</p>
+		First choose a file or go to the upload page to upload a file.
+	</br>
+		</br>
+		<h4>Choose File Data To Rendered</h4>
+		<select id="render-list">
+			<option value="" selected>Please select</option>
+			{{#each data_files}}
+	  		<option value="{{filename}}">{{filename}}</option>
+	  		{{/each}}
+		</select>
+		<h4>Choose File Position To Rendered</h4>
+		<select id="pos-list">
+			<option value="" selected>Please select</option>
+			{{#each pos_files}}
+	  		<option value="{{filename}}">{{filename}}</option>
+	  		{{/each}}
+		</select>
+		</br>
+		<h4>Input Map URL To Rendered (Full URL)</h4>
+		<input id="map-url" class="input-xlarge" placeholder="Map URL (OPTIONAL)">
+		</br>
+		</br>
+		<button id='render-file' class='btn btn-success' type='button'>Render</button></br> </br>
+		<label id="current-render" ></label>
+		<p>
+		After you are done with everything, you can select on of the page on the navigation bar.
+		</p>
+
+	</div>
 </template>

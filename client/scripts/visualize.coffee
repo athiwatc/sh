@@ -26,12 +26,15 @@ Template.visualize.rendered = ->
     fill: "rgba(0,0,0,0.1)"
   )
 
+  window.sensors = {sensor: []}
+
   window.canvas.setLoop ->
     # Get the sensor at the current time
     # There should only be one sensor data at any giving time as it already been collapsed
-    temp = SensorData.findOne({type: 1, time: window.currentTime.unix()})
+    temp = SensorData.findOne({type: 1, time: window.currentTime.unix() * 1000})
     # Just checking that there's a sensor at a current time
     window.sensors = temp if temp?
+    #console.log window.sensors
     # Loop against all active sensor
     for sensor in window.sensors.sensor
       #console.log sensor
@@ -76,6 +79,30 @@ Template.visualize.rendered = ->
     window.currentTime.add 's', 1
     $('#currentTime').val(window.currentTime.toString())
 
+  # Remove the image from the canvas
+  $('#canvas').css('background', 'url()')
+
+  #l = Ladda.create( document.querySelector( '#loadButton' ) )
+  #l.start()
+
+
+  # Set the file prefix
+  filename = $('#file').val()
+
+  Session.set('file', filename)
+  
+  # Call the meteor on the server to load the set of files and when finish load up the background image to the canvas
+  Meteor.call('update', Session.get('rendered-posfile'), Session.get('rendered-filename'), ->
+    $('#canvas').css('background', 'url("'+Session.get('rendered-mapurl')+'")')
+    img = new Image();
+    img.onload = ->
+      $('#canvas').attr('width', this.width)
+      $('#canvas').attr('height', this.height)
+
+    img.src = Session.get('rendered-mapurl');
+    #l.stop()
+  )
+
 Template.visualize.events {
   # Click start
   'click .start': ->
@@ -116,14 +143,14 @@ Template.visualize.events {
     Session.set('file', filename)
     
     # Call the meteor on the server to load the set of files and when finish load up the background image to the canvas
-    Meteor.call('update', filename, ->
-      $('#canvas').css('background', 'url(/'+filename+'-pic.png)')
+    Meteor.call('update', Session.get('rendered-posfile'), Session.get('rendered-filename'), ->
+      $('#canvas').css('background', 'url("'+Session.get('rendered-mapurl')+'")')
       img = new Image();
       img.onload = ->
         $('#canvas').attr('width', this.width)
         $('#canvas').attr('height', this.height)
 
-      img.src = '/'+filename+'-pic.png';
+      img.src = Session.get('rendered-mapurl');
       l.stop()
     )
 }

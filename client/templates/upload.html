@@ -1,15 +1,73 @@
 <template name="upload">
-	<input type="file" id="files" name="files" />
-	<button type="button" id="uploadButton">Upload</button>
-	{{#each files}}
-	<div id='file_{{_id}}_div' >
-		<h2>{{filename}}</h2> 
-		<button class='view' type='button' data-file={{_id}}>View</button> 
-		<button class='deleted' type='button' data-file={{_id}}>Delete</button>
+	<div class="content upload">
+	<h1> Upload </h1>
+	<div class="line-separator"></div></br>
+	<div class="fileinputs">
+		<input class="file" type="file" id="files" name="files" />
+		<div id="browse-file" class="fakefile btn">
+			Browse &nbsp;
+		</div>
+		<button type="button" id="uploadButton" class="btn btn-primary">Upload Data File</button>
 	</div>
-	{{/each}}
-	<label id="view-header">View Data From: - </label>
-	<textarea id="info-view" rows="25" cols="50">
-		viewer
-	</textarea> 
+
+	<div class="row">
+		</br>
+		<div class="span8">
+		<table id="files-table" class="table table-bordered table-hover">
+			<thead>
+		    	<tr>
+		    		<th>File Name</th>
+		    		<th class="span1">View</th>
+		    		<th class="span1">Delete</th>
+		    	</tr>
+			</thead>
+			{{#each data_files}}
+			<tbody id='file_{{_id}}_div'>
+		    	<tr>
+		    		<td>{{filename}}</td>
+		    		<td><button class='btn btn-info view' type='button' data-file={{_id}} data-type='data'>View</button></td>
+		    		<td><button class='btn btn-danger deleted' type='button' data-file={{_id}} data-type='data'>Delete</button></td>
+		    	</tr>
+			</tbody>
+			{{/each}}
+		</table>
+
+		
+		<div class="fileinputs">
+		<input class="file" type="file" id="files_position" name="files" />
+		<div id="browse-file-pos" class="fakefile btn">
+			Browse &nbsp;
+		</div>
+		<button type="button" id="uploadButtonPosition" class="btn btn-primary">Upload Position File</button>
+		</div>
+		
+		<table id="files-table" class="table table-bordered table-hover">
+			</br>
+			<thead>
+		    	<tr>
+		    		<th>File Name</th>
+		    		<th class="span1">View</th>
+		    		<th class="span1">Delete</th>
+		    	</tr>
+			</thead>
+			{{#each pos_files}}
+			<tbody id='file_{{_id}}_div'>
+		    	<tr>
+		    		<td>{{filename}}</td>
+		    		<td><button class='btn btn-info view' type='button' data-file={{_id}} data-type='pos'>View</button></td>
+		    		<td><button class='btn btn-danger deleted' type='button' data-file={{_id}} data-type='pos'>Delete</button></td>
+		    	</tr>
+			</tbody>
+			{{/each}}
+		</table>
+		</div>
+		<div class="span5">
+			<label id="view-header"><h4>View Data From: - </h4></label>
+			<textarea id="info-view" rows="20" cols="30" style="width: 350px;">
+				viewer
+			</textarea> 
+		</div>
+	</div>
+	<!-- Position Files upload section -->
+</div>
 </template>

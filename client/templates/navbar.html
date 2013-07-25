@@ -1,13 +1,28 @@
 <template name="navbar">
-	<div id="navbar">
-		<a href="/">Home</a>
-		<a href="/upload">Upload</a>
-		<a href="/piechart">Pie Chart</a>
-		<a href="/chorddiagram">Chord Diagram</a>
-		<a href="/groupedbarchart">Grouped Bar Chart</a>
-		<a href="/timeline">Timeline</a>
-		<a href="/visualize">Visualize Data</a>
-		<a href="/coor">Coordinate Picker</a>
+	<div id="navigation">
+	    <div class="cover"></div>
+		<div id="page-pointer">
+			<div class="home page">
+				<p><a href="/"><img src="/pic/home-icon.png" height="50px" width="50px" ></a></p>
+	        </div>
+	        <div class="upload page">
+				<p><a href="/upload">Upload Datas</a></p>
+			</div>
+	        <div class="piechart page">
+	            <p><a href="/piechart">Total Activities</a></p>
+	        </div>
+	        <div class="chorddiagram page">
+	            <p><a href="/chorddiagram">Activities Sequence</a></p>
+	        </div>
+	        <div class="timeline page">
+	            <p><a href="/timeline">Activities Timeline</a></p>
+	        </div>
+	        <div class="visualize page">
+	            <p><a href="/visualize">Sensor Simulation</a></p>
+	        </div>
+	        <div class="picker page">
+	            <p><a href="/coor">Coordinate Picker</a></p>
+	        </div>
+	    </div>
 	</div>
-	<br>
 </template>

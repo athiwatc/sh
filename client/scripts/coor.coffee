@@ -15,7 +15,13 @@ Template.coor.events {
       result += $('#sensor'+i+' [name=sensor]').val() + " " + $('#sensor'+i+' [name=form_x]').val() + " " + $('#sensor'+i+' [name=form_y]').val() + '\n'
       i += 1
     # Set the output textarea box
-    $('#output').text(result)
+    if (PosFilesName.findOne({filename: $('#filename').val()})?)
+      alert('Duplicated File')
+    else
+      Meteor.call('coor', $('#filename').val(), result, () ->
+        PosFilesName.insert({filename: $('#filename').val()})
+        alert('File added')
+      )
   'click #loadcoor': ->
     # Load the image file to the field
     $('#picture').attr('src', $('#filecoor').val())

@@ -9,3 +9,5 @@ router
 coffeescript
 moment
 meteor-file
+collectionFS
+accounts-base
