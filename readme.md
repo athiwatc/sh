@@ -20,3 +20,37 @@ You can find the documentation of the source code at `http://athiwatc.github.io/
 ##Notes
 1. Even this application works looks like a normal web application but it works like a normal desktop application where not everything can be done in the browser and the browser is mostly used for displaying information only.
 2. There is a mix of javascript and coffeescript as we prefer different language type. Which is not really a big problem in the end. You can use many free tools to convert between them easily.
+
+##File Format
+
+Sensor Information File
+
+- Format: 
+
+Date Time Sensor_Name Status
+
+or
+
+Date Time Activity_Name Status
+
+Example
+
+2008-02-27    12:45:14.498824	M13	OFF
+
+2008-02-27	12:49:15 asterisk END
+
+=======================================
+
+Position Information File
+
+- Format: 
+
+Position_name xpos ypos
+
+Example
+
+M01 23 102
+
+J21 24 44
+
+M_J 211 234

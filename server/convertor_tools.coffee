@@ -45,20 +45,31 @@ class SensorDictionary
 # Overview
 
 # To convert data
+
 # From format: 
+
 # Date Time Sensor_Name Status
+
 # or
+
 # Date Time Activity_Name Status
-#
+
 # 2008-02-27	12:45:14.498824	M13	OFF
+
 # 2008-02-27	12:49:15 asterisk END
+
 # To:
+
 # 1 Unixtime xPos yPos sensor_name sensor_status
+
 # 0 Unixtime event_name event_status
-#
+
 # 1 1204112862 683 123 M13 OFF
+
 # 0 1204116555 asterisk START 
+
 # Line of data that is a sensor activation, its converted format data would put prefix '1' in the front
+
 # List of data that is a activity, convert, its converted format data would put prefix '0' in the front
 class Convertor
 
@@ -153,25 +164,46 @@ class Convertor
 # Overview
 
 # Use to convert data to timeline format (Standard format for this application)
+
 # From format: (Converted data format from Convertor Class)
+
 # 1 1204112607 568 231 M08 ON 
+
 # 1 1204112607 503 197 M07 ON 
+
 # 1 1204112608 592 197 M09 ON 
+
 # 1 1204112609 683 197 M14 ON 
+
 # 1 1204112609 484 291 M23 OFF 
+
 # 1 1204112610 484 261 M01 OFF 
+
 # 1 1204112610 503 197 M07 OFF 
+
 # 1 1204112611 683 123 M13 ON 
+
 # 1 1204112611 568 231 M08 OFF 
+
 # 1 1204112612 592 197 M09 OFF 
+
 # 1 1204112613 683 197 M14 OFF
+
+
 # 0 1204112620 Phone_call begin
+
 # To:
+
 # Prefix Unixtime [Active Sensors or Activity] [Activity status if it is activity]
+
 # 1 1204112607 M07 M08 
+
 # 1 1204112608 M07 M08 M09 
+
 # 1 1204112609 M07 M08 M09 M14 
+
 # 1 1204112610 M08 M09 M14
+
 # 0 1204112620 Phone_call begin
 class ConvertorTimelineFormat extends Convertor
 	
@@ -384,6 +416,7 @@ class DataProcessor
 		@_data = data
 
 	# Get begin time of file and end time of file
+
 	# format {begin: time, end: time}
 	getTimePeriod:()->
 		tmp = @_data[0].trim().split(/[\s]/)
@@ -393,6 +426,7 @@ class DataProcessor
 		return {begin: begin_time, end: end_time}
 
 	# Get all activities and number of times from input data
+	
 	# format {key: activity, value: number of times} in returned object list
 	getAllActivities: ()->
 		storage = new Map()
@@ -413,6 +447,7 @@ class DataProcessor
 	# Get all sequence activities pair
 	# finding main activity and then finding all what activity is possible happened next to main activity
 	# it's called 'next_activity'
+	
 	# format {key: main_activity, value: Map(next_activity, number of times) } in returned object list
 	getAllActivitiesInSequencePair: ()->
 		# This method is based on finite-state machine to compute
@@ -473,6 +508,7 @@ class DataProcessor
 
 	# Get all activities with unixtime format (Each line of data unixtime is different 1 minute).
 	# Returned object list is contained activity that happened in each minutes
+	
 	# format {name: activity name, color: unique color associated with activity, time: unixtime that activity happened} in returned object list
 	getAllActivitiesInUnixTime: ()->
 		# This method is based on finite-state machine to compute
@@ -533,6 +569,7 @@ class DataProcessor
 		return time_stack
 
 	# To floor unixtime by cut off second from unixtime
+	
 	# HH:mm:ss to HH:mm
 	_cutOffSecondFromUnixTime: (unixtime)->
 		cut_off_second = moment(unixtime).format("YYYY-MM-DD,HH:mm")

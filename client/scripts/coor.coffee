@@ -7,12 +7,12 @@ Template.coor.events {
     e.preventDefault()
     i = 0
     result = ''
+    max = $('#data_div').attr("max-counter")
     # Loop while the sensor still exists
-    while true
-      # Get OUT!!!@!@!
-      break if $('#sensor'+i).length == 0
+    while i <= max
+      if $('#sensor'+i).length != 0
       #Store the result from the sensor
-      result += $('#sensor'+i+' [name=sensor]').val() + " " + $('#sensor'+i+' [name=form_x]').val() + " " + $('#sensor'+i+' [name=form_y]').val() + '\n'
+        result += $('#sensor'+i+' [name=sensor]').val() + " " + $('#sensor'+i+' [name=form_x]').val() + " " + $('#sensor'+i+' [name=form_y]').val() + '\n'
       i += 1
     # Set the output textarea box
     if (PosFilesName.findOne({filename: $('#filename').val()})?)
@@ -36,6 +36,7 @@ Template.coor.events {
   if (p!=null && p!="")
     # Set the counter data...
     counter = $('#data_div').attr("counter")
+    max_counter = $('#data_div').attr("max-counter")
     # Adding them so the user can see it.
     added = "<div id='sensor#{counter}'>Sensor name = <input type='text' name='sensor' value='#{p}' size='10'/> x = <input type='text' name='form_x' size='4' value='#{x}'/>, y = <input type='text' name='form_y' size='4' value='#{y}'/>"
     deleted = " <button type='button' class='btn btn-primary' id='remove#{counter}'>Remove</button> </br></div>"
@@ -43,6 +44,7 @@ Template.coor.events {
     $("#remove#{counter}").click(()->
       $("#sensor#{counter}").remove()
     )
+    $("#data_div").attr("max-counter", parseInt(max_counter) + 1)
     $("#data_div").attr("counter", parseInt(counter) + 1)
 
 # Call when the user clicks on the image.
