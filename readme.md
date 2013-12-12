@@ -10,7 +10,7 @@
 ##Generating data files
 There are two ways that data have to be generated. Note that the example after you have clone should work correctly.
 ###First is the standard data
-This is where you convert your data set into the standard data set by using the language of your choice. Please take a look at `public/sample-data.txt` and `public/all-pos.txt`
+This is where you convert your data set into the standard data set by using the language of your choice. Please take a look sample data at `public/sample-data.txt` and sample position at `public/sample-pos.txt`
 ###Second part is automatic
 If you want to add more visualization graph, please look at the client folder and `router.js`. The convertor is at `server/convertor_tools.coffee`. Please write everything into `public` folder because the web application can we access by the URL from the root. eg. `http://localhost:3000/my-img.png` will be put in `public/my-img.png`
 
@@ -23,7 +23,8 @@ You can find the documentation of the source code at `http://athiwatc.github.io/
 
 ##File Format
 
-Sensor Information File
+Data Information File
+(Sample file: public/sample-data.txt)
 
 - Format: 
 
@@ -39,9 +40,13 @@ Example
 
 2008-02-27	12:49:15 asterisk END
 
+Each data are separated line by line
+
+
 =======================================
 
 Position Information File
+(Sample file: public/sample-pos.txt)
 
 - Format: 
 
@@ -54,3 +59,5 @@ M01 23 102
 J21 24 44
 
 M_J 211 234
+
+Each data are separated line by line
